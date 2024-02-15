@@ -20,6 +20,7 @@ class Game:
         pg.init()
         # Settings - What different settings affect
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
+        # sets the title of the game
         pg.display.set_caption(TITLE)
         # setting game clock
         self.clock = pg.time.Clock()
@@ -51,11 +52,14 @@ class Game:
                 # prints the map
                 print(line)
                 self.map_data.append(line)
-
+    # Creates a method that runs the game
     def new(self):
-        # creates sprite group
+        # prints "create new game..."
+        print("create new game...")
+        # creates sprite group and adds walls, all sprites, and coins to it
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
+        self.coins = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -79,11 +83,15 @@ class Game:
                     self.player1 = Player(self, row, col)
                 # if tile == "p":
                 #     self.player2 = Player(self, row, col)
+                # Places a coin if the title of the location on the map is "C"
+                if tile == "C":
+                    Coin(self, col, row)
 
     # Runs our game - Starts game
     def run(self):
         # Makes it true that we are playing the game
         self.playing = True
+        # while playing the game
         while self.playing:
             # tick speed
             self.dt = self.clock.tick(FPS) / 1000

@@ -31,6 +31,7 @@ class Player(pg.sprite.Sprite):
         # Sets the player's position
         self.x = x * TILESIZE
         self.y = y * TILESIZE
+        self.moneybag = 0
 
     # allows us to access keyboard inputs
     def get_keys(self):
@@ -78,6 +79,7 @@ class Player(pg.sprite.Sprite):
                 # creates collions in the x direction for a negative velocity
                 if self.vx < 0:
                     self.x = hits[0].rect.right
+                # resets velocity and rectangle
                 self.vx = 0
                 self.rect.x = self.x
         # If the collision occurs in the y-direction
@@ -91,12 +93,21 @@ class Player(pg.sprite.Sprite):
              # Codes collision for the y direction moving upward
                 if self.vy < 0:
                     self.y = hits[0].rect.bottom
+            # resets velocity and rectangle
                 self.vy = 0
                 self.rect.y = self.y
+                
+        # Allows us to collide with coins and have them dissappear
+    def collide_with_group(self, group, kill):
+        hits = pg.sprite.spritecollide(self, group, kill)
+        if hits:
+            return True
+        # return true when we hit a coin
 
-    # placeholder to control the sprite's behavior
     def update(self):
+        # gives access to keyboard inputs
         self.get_keys()
+        # controls player's speed in x and y direction
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
         # determines where the rectangle is on the screen
@@ -104,8 +115,12 @@ class Player(pg.sprite.Sprite):
         # add collision
         self.collide_with_walls('x')
         self.rect.y = self.y
-        # add collision later
+        # add collision
         self.collide_with_walls('y')
+        # adds money to our moneybag when we collide with a coin (not currently displaying moneybag)
+        if self.collide_with_group(self.game.coins, True):
+            self.moneybag += 1
+      
 
 # sprite = module Sprite = class (Uppercase)
 # creates mold for wall
@@ -128,6 +143,30 @@ class Wall(pg.sprite.Sprite):
         # determines where wall will be placed
         self.rect.x = x *  TILESIZE
         self.rect.y = y *  TILESIZE
+
+# creates new coin class
+class Coin(pg.sprite.Sprite):
+    # initializes the class
+    def __init__(self, game, x, y):
+        # adds the sprite to the all sprites group and to the coins group
+        self.groups = game.all_sprites, game.coins
+        # initializes the class
+        pg.sprite.Sprite.__init__(self, self.groups)
+        # sets the coin class game equal to the game
+        self.game = game
+        # sets the coin image
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        # sets the color of the coin
+        self.image.fill(YELLOW)
+        # allows us to get the rectangle
+        self.rect = self.image.get_rect()
+        # sets the x and y coordinates of the coin
+        self.x = x
+        self.y = y
+        # sets the position and size of the coin
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+    
 
 
 
