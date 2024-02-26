@@ -32,6 +32,8 @@ class Player(pg.sprite.Sprite):
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.moneybag = 0
+        # allows us to access speed conveniently
+        self.speed = 300
 
     # allows us to access keyboard inputs
     def get_keys(self):
@@ -41,18 +43,18 @@ class Player(pg.sprite.Sprite):
         keys = pg.key.get_pressed()
         # Makes the character move left (have less speed) when the left arrow or the a key is pressed
         if keys[pg.K_LEFT] or keys[pg.K_a]:
-            self.vx = -PLAYER_SPEED  
+            self.vx = -self.speed  
         # Makes the character move right (have more speed) when the right arrow or the d key is pressed
         if keys[pg.K_RIGHT] or keys[pg.K_d]:
-            self.vx = PLAYER_SPEED 
+            self.vx = self.speed 
         # Makes the character move up (have less speed because y is counted from top to bottom)
         # when the up arrow or the w key is pressed 
         if keys[pg.K_UP] or keys[pg.K_w]:
-            self.vy = -PLAYER_SPEED 
+            self.vy = -self.speed 
         # Makes the character move down (have more speed because y is counted from top to bottom) 
         # when the down arrow or the s key is pressed 
         if keys[pg.K_DOWN] or keys[pg.K_s]:
-            self.vy = PLAYER_SPEED
+            self.vy = self.speed
         # This makes it so that we do not travel faster in the diagonal direction according to pythagoras' 
         # formula because the hypotanuse of a triangle is more direct than traveling the x and y distances
         if self.vx != 0 and self.vy != 0:
@@ -71,6 +73,7 @@ class Player(pg.sprite.Sprite):
         # If it hits in the x-direction
         if dir == 'x':
             hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            # hits are collisions
             if hits:
                 if self.vx > 0:
                 # If the velocity in the x direction is positive and the objects collide, we must subtract the width of
@@ -100,9 +103,27 @@ class Player(pg.sprite.Sprite):
         # Allows us to collide with coins and have them dissappear
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
+        # hits is equal to collisions
         if hits:
             return True
         # return true when we hit a coin
+
+    # made possible by Aayush's question
+    # Creates a method for the collision
+    # Kill determines whether the coin disappears
+    def collide_with_group(self, group, kill):
+        # sets collision for groups
+        hits = pg.sprite.spritecollide(self, group, kill)
+        if hits:
+            if str(hits[0].__class__.__name__) == "Coin":
+                # adds a coin to the moneybag when we contact a coin
+                self.moneybag += 1
+                # allows us to do things based on when we collide with a powerup
+            if str(hits[0].__class__.__name__) == "PowerUp":
+                # makes us faster when we hit a powerup
+                self.speed += 300
+                
+
 
     def update(self):
         # gives access to keyboard inputs
@@ -117,9 +138,18 @@ class Player(pg.sprite.Sprite):
         self.rect.y = self.y
         # add collision
         self.collide_with_walls('y')
+        # calls the collide with group method
+        self.collide_with_group(self.game.coins, True)
+        # adds collision for powerups
+        self.collide_with_group(self.game.power_ups, True)
+
+        # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
+        # if coin_hits:
+        #     print("I got a coin")
+
         # adds money to our moneybag when we collide with a coin (not currently displaying moneybag)
-        if self.collide_with_group(self.game.coins, True):
-            self.moneybag += 1
+        # if self.collide_with_group(self.game.coins, True):
+        #     self.moneybag += 1
       
 
 # sprite = module Sprite = class (Uppercase)
@@ -167,6 +197,28 @@ class Coin(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
     
+# creates new coin class
+class PowerUp(pg.sprite.Sprite):
+    # initializes the class
+    def __init__(self, game, x, y):
+        # adds the sprite to the all sprites group and to the power up group
+        self.groups = game.all_sprites, game.power_ups
+        # initializes the class
+        pg.sprite.Sprite.__init__(self, self.groups)
+        # sets the power up class game equal to the game
+        self.game = game
+        # sets the power up image
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        # sets the color of the power up
+        self.image.fill(PURPLE)
+        # allows us to get the rectangle
+        self.rect = self.image.get_rect()
+        # sets the x and y coordinates of the power up
+        self.x = x
+        self.y = y
+        # sets the position and size of the power up
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
 
 
 

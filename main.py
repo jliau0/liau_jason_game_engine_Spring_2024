@@ -56,10 +56,11 @@ class Game:
     def new(self):
         # prints "create new game..."
         print("create new game...")
-        # creates sprite group and adds walls, all sprites, and coins to it
+        # creates sprite group and adds walls, all sprites, powerups, and coins to it
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.coins = pg.sprite.Group()
+        self.power_ups = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -86,6 +87,9 @@ class Game:
                 # Places a coin if the title of the location on the map is "C"
                 if tile == "C":
                     Coin(self, col, row)
+                # places a powerup where we place "P" on the map
+                if tile == "S":
+                    PowerUp(self, col, row)
 
     # Runs our game - Starts game
     def run(self):
