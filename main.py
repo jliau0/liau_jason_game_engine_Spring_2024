@@ -1,5 +1,5 @@
 # The file was created by Jason Liau
-
+# added this comment to prove github is listening
 # This asterisk is pulling information from the settings file - We are also importing modules we will access later
 import pygame as pg
 from settings import *
