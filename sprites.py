@@ -5,6 +5,7 @@
 import pygame as pg
 from settings import *
 
+# testing github upload
 
 # Create a "mold" for the player - Inherits from pg.sprite.Sprite - Subclass of pg.sprite.Sprite
 class Player(pg.sprite.Sprite):
