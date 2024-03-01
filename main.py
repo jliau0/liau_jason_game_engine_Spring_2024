@@ -15,7 +15,7 @@ from os import path
 '''
 menu
 more powerup types
-moving enemies
+kill enemies
 '''  
 # This creates a "mold" for our game - Game blueprint
 class Game:
