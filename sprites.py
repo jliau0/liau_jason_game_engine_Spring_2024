@@ -34,7 +34,7 @@ class Player(pg.sprite.Sprite):
         self.y = y * TILESIZE
         self.moneybag = 0
         # allows us to access speed conveniently
-        self.speed = 300
+        self.speed = 301
 
     # allows us to access keyboard inputs
     def get_keys(self):
@@ -123,6 +123,9 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "PowerUp":
                 # makes us faster when we hit a powerup
                 self.speed += 300
+            if str(hits[0].__class__.__name__) == "SpeedDown":
+                # makes us slower when we hit a speed down powerup
+                self.speed -= 300
                 
 
 
@@ -143,6 +146,8 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.coins, True)
         # adds collision for powerups
         self.collide_with_group(self.game.power_ups, True)
+        # adds collision for speed down powerups
+        self.collide_with_group(self.game.speed_down, True)
 
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
@@ -198,7 +203,7 @@ class Coin(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
     
-# creates new coin class
+# creates new powerup class
 class PowerUp(pg.sprite.Sprite):
     # initializes the class
     def __init__(self, game, x, y):
@@ -212,6 +217,29 @@ class PowerUp(pg.sprite.Sprite):
         self.image = pg.Surface((TILESIZE, TILESIZE))
         # sets the color of the power up
         self.image.fill(PURPLE)
+        # allows us to get the rectangle
+        self.rect = self.image.get_rect()
+        # sets the x and y coordinates of the power up
+        self.x = x
+        self.y = y
+        # sets the position and size of the power up
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
+# creates new powerup class
+class SpeedDown(pg.sprite.Sprite):
+    # initializes the class
+    def __init__(self, game, x, y):
+        # adds the sprite to the all sprites group and to the power up group
+        self.groups = game.all_sprites, game.speed_down
+        # initializes the class
+        pg.sprite.Sprite.__init__(self, self.groups)
+        # sets the power up class game equal to the game
+        self.game = game
+        # sets the power up image
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        # sets the color of the power up
+        self.image.fill(ORANGE)
         # allows us to get the rectangle
         self.rect = self.image.get_rect()
         # sets the x and y coordinates of the power up

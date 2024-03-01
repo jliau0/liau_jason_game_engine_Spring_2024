@@ -61,6 +61,7 @@ class Game:
         self.walls = pg.sprite.Group()
         self.coins = pg.sprite.Group()
         self.power_ups = pg.sprite.Group()
+        self.speed_down = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -90,6 +91,9 @@ class Game:
                 # places a powerup where we place "P" on the map
                 if tile == "S":
                     PowerUp(self, col, row)
+                # places a speed down powerup where we place "s" on the map
+                if tile == "s":
+                    SpeedDown(self, col, row)
 
     # Runs our game - Starts game
     def run(self):
