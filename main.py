@@ -11,7 +11,12 @@ from sprites import *
 import sys
 # Imports the operating system
 from os import path
-  
+
+'''
+menu
+more powerup types
+moving enemies
+'''  
 # This creates a "mold" for our game - Game blueprint
 class Game:
     # Initializes the game
