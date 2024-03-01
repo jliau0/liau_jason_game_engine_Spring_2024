@@ -260,32 +260,44 @@ class Mob(pg.sprite.Sprite):
         self.game = game
         # sets appearance of the mob
         self.image = pg.Surface((TILESIZE, TILESIZE))
+        # sets color to red
         self.image.fill(RED)
+        # sets the rectangle and position of rectangle for the mob
         self.rect = self.image.get_rect()
         self.x = x
         self.y = y
+        # sets the speed of the mob
         self.vx, self.vy = 100, 100
         self.x = x * TILESIZE
         self.y = y * TILESIZE
         self.speed = 1
+        # sets collision with walls for the mob
     def collide_with_walls(self, dir):
+        # sets collision with walls in the x-direction
         if dir == 'x':
             # print('colliding on the x')
+            # makes it so that the wall does not disappear when we contact it
             hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            # adjusts velocity when we contact a wall
             if hits:
                 self.vx *= -1
                 self.rect.x = self.x
+                # sets collision for the y direction
         if dir == 'y':
             # print('colliding on the y')
+            # makes it so that the wall does not disappear when we contact it
             hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            # adjusts velocity when we contact wall
             if hits:
                 self.vy *= -1
                 self.rect.y = self.y
     def update(self):
         # self.rect.x += 1
+        # controls velocity and position
         self.x += self.vx * self.game.dt
         self.y += self.vy * self.game.dt
 
+        # makes our velocity depend on the player's velocity and position so that we follow it
         if self.rect.x < self.game.player1.rect.x:
             self.vx = 100
         if self.rect.x > self.game.player1.rect.x:
@@ -294,6 +306,7 @@ class Mob(pg.sprite.Sprite):
             self.vy = 100
         if self.rect.y > self.game.player1.rect.y:
             self.vy = -100
+        # codes collision with walls
         self.rect.x = self.x
         self.collide_with_walls('x')
         self.rect.y = self.y
