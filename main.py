@@ -16,6 +16,12 @@ from os import path
 menu
 more powerup types
 kill enemies
+
+goal - kill enemies
+rules - do not move beyond boundries, kill enemies before time runs out/before enemy kills you
+freedom - movement
+feedback - enemy dies/coins disappear/victory screen
+Sentence: The player runs into/interacts with the enemy and the enemy dies (and the victory screen appears)
 '''  
 # This creates a "mold" for our game - Game blueprint
 class Game:
