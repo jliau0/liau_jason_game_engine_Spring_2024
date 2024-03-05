@@ -35,6 +35,7 @@ class Player(pg.sprite.Sprite):
         self.moneybag = 0
         # allows us to access speed conveniently
         self.speed = 301
+        self.moneybag = 0
 
     # allows us to access keyboard inputs
     def get_keys(self):
