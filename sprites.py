@@ -36,6 +36,7 @@ class Player(pg.sprite.Sprite):
         # allows us to access speed conveniently
         self.speed = 301
         self.moneybag = 0
+        self.hitpoints = 2
 
     # allows us to access keyboard inputs
     def get_keys(self):
@@ -127,6 +128,8 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "SpeedDown":
                 # makes us slower when we hit a speed down powerup
                 self.speed -= 300
+            if str(hits[0].__class__.__name__) == "Mob":
+                print("Collided with mob")
                 
 
 
@@ -149,6 +152,8 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.power_ups, True)
         # adds collision for speed down powerups
         self.collide_with_group(self.game.speed_down, True)
+        # adds collision for mobs
+        self.collide_with_group(self.game.mobs, False)
 
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
