@@ -129,7 +129,9 @@ class Player(pg.sprite.Sprite):
                 # makes us slower when we hit a speed down powerup
                 self.speed -= 300
             if str(hits[0].__class__.__name__) == "Mob":
+                # reduces our hitpoints when we contact a mob
                 print("Collided with mob")
+                self.hitpoints -= 1
                 
 
 
@@ -154,6 +156,12 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.speed_down, True)
         # adds collision for mobs
         self.collide_with_group(self.game.mobs, False)
+
+        # adds actions based on our moneybag count and hitpoint value
+        if self.moneybag == 10:
+            print("You win!")
+        if self.hitpoints == 0:
+            print("You suck")
 
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
