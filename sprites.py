@@ -36,7 +36,7 @@ class Player(pg.sprite.Sprite):
         # allows us to access speed conveniently
         self.speed = 301
         self.moneybag = 0
-        self.hitpoints = 2
+        self.hitpoints = 1
 
     # allows us to access keyboard inputs
     def get_keys(self):
@@ -313,13 +313,13 @@ class Mob(pg.sprite.Sprite):
 
         # makes our velocity depend on the player's velocity and position so that we follow it
         if self.rect.x < self.game.player1.rect.x:
-            self.vx = 100
+            self.vx = 200
         if self.rect.x > self.game.player1.rect.x:
-            self.vx = -100    
+            self.vx = -200    
         if self.rect.y < self.game.player1.rect.y:
-            self.vy = 100
+            self.vy = 200
         if self.rect.y > self.game.player1.rect.y:
-            self.vy = -100
+            self.vy = -200
         # codes collision with walls
         # disables collision with walls
         self.rect.x = self.x
