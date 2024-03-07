@@ -166,6 +166,7 @@ class Player(pg.sprite.Sprite):
             print("You win!")
         if self.hitpoints <= 0:
             print("You suck")
+            self.game.show_loss_screen()
 
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:

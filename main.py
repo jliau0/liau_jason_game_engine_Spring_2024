@@ -198,8 +198,18 @@ class Game:
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, "This is the start screen", 24, WHITE, WIDTH/2 - 32, 2)
+        self.draw_text(self.screen, "Press a Key to Begin", 24, WHITE, WIDTH/2 - 32, 2)
         # waits for a keyboard input to start the game
+        pg.display.flip()
+        self.wait_for_key()
+
+    # creates loss screen
+    def show_loss_screen(self):
+        # fills the background color
+        self.screen.fill(BGCOLOR)
+        # draws text on the background
+        self.draw_text(self.screen, "YOU SUCK!", 24, WHITE, WIDTH/2 - 32, 2)
+        # waits for a keyboard input to return to menu
         pg.display.flip()
         self.wait_for_key()
 
