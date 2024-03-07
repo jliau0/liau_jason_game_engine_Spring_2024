@@ -132,8 +132,10 @@ class Player(pg.sprite.Sprite):
                 # reduces our hitpoints when we contact a mob
                 print("Collided with mob")
                 self.hitpoints -= 1
-                
-
+            if str(hits[0].__class__.__name__) == "SuperMob":
+                # reduces our hitpoints when we contact a super mob
+                print("Collided with super mob")
+                self.hitpoints -= 1
 
     def update(self):
         # gives access to keyboard inputs
@@ -156,11 +158,13 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.speed_down, True)
         # adds collision for mobs
         self.collide_with_group(self.game.mobs, False)
+        # adds collision for super mobs
+        self.collide_with_group(self.game.super_mobs, False)
 
         # adds actions based on our moneybag count and hitpoint value
         if self.moneybag == 10:
             print("You win!")
-        if self.hitpoints == 0:
+        if self.hitpoints <= 0:
             print("You suck")
 
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
@@ -323,10 +327,73 @@ class Mob(pg.sprite.Sprite):
         # codes collision with walls
         # disables collision with walls
         self.rect.x = self.x
+        self.collide_with_walls('x')
+        self.rect.y = self.y
+        self.collide_with_walls('y')
+
+class SuperMob(pg.sprite.Sprite):
+    # instantiates mob
+    def __init__(self, game, x, y):
+        # adds super mob to all sprites and mobs
+        self.groups = game.all_sprites, game.super_mobs
+        # initializes the mob and groups
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        # sets appearance of the mob
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        # sets color to red
+        self.image.fill(DARKRED)
+        # sets the rectangle and position of rectangle for the mob
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        # sets the speed of the mob
+        self.vx, self.vy = 100, 100
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        self.speed = 1
+        # sets collision with walls for the mob
+    def collide_with_walls(self, dir):
+        # sets collision with walls in the x-direction
+        if dir == 'x':
+            # print('colliding on the x')
+            # makes it so that the wall does not disappear when we contact it
+            hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            # adjusts velocity when we contact a wall
+            if hits:
+                self.vx *= -1
+                self.rect.x = self.x
+                # sets collision for the y direction
+        if dir == 'y':
+            # print('colliding on the y')
+            # makes it so that the wall does not disappear when we contact it
+            hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            # adjusts velocity when we contact wall
+            if hits:
+                self.vy *= -1
+                self.rect.y = self.y
+
+    def update(self):
+        # self.rect.x += 1
+        # controls velocity and position
+        self.x += self.vx * self.game.dt
+        self.y += self.vy * self.game.dt
+
+        # makes our velocity depend on the player's velocity and position so that we follow it
+        if self.rect.x < self.game.player1.rect.x:
+            self.vx = 200
+        if self.rect.x > self.game.player1.rect.x:
+            self.vx = -200    
+        if self.rect.y < self.game.player1.rect.y:
+            self.vy = 200
+        if self.rect.y > self.game.player1.rect.y:
+            self.vy = -200
+        # codes collision with walls
+        # disables collision with walls
+        self.rect.x = self.x
         # self.collide_with_walls('x')
         self.rect.y = self.y
         # self.collide_with_walls('y')
-
 
 
 

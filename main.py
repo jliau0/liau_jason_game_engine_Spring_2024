@@ -73,6 +73,7 @@ class Game:
         self.power_ups = pg.sprite.Group()
         self.speed_down = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
+        self.super_mobs = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -108,6 +109,9 @@ class Game:
                 # places a mob where we place "M" on the map
                 if tile == "M":
                     Mob(self, col, row)
+                # places a super mob where we place "M" on the map
+                if tile == "m":
+                    SuperMob(self, col, row)
 
     # Runs our game - Starts game
     def run(self):
@@ -143,6 +147,20 @@ class Game:
          for y in range(0, HEIGHT, TILESIZE):
              # Tuples are the parenthesees - they are lists that don't change
              pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+
+    # allows us to draw text with a method
+    def draw_text(self, surface, text, size, color, x, y):
+        # sets font and size
+        font_name = pg.font.match_font('arial')
+        font = pg.font.Font(font_name, size)
+        # renders font and sets color
+        text_surface = font.render(text, True, color)
+        # gets the rectangle for the text
+        text_rect = text_surface.get_rect()
+        # sets position of the text
+        text_rect.topleft = (x,y)
+        # allows us to use the text
+        surface.blit(text_surface, text_rect)
     
         # gives us the ability to draw the sprites
     def draw(self):
@@ -174,10 +192,36 @@ class Game:
             #     if event.key == pg.K_DOWN:
             #         # Moves the player down by 1
             #         self.player1.move(dy=1)
+                
+    # creates start screen
+    def show_start_screen(self):
+        # fills the background color
+        self.screen.fill(BGCOLOR)
+        # draws text on the background
+        self.draw_text(self.screen, "This is the start screen", 24, WHITE, WIDTH/2 - 32, 2)
+        # waits for a keyboard input to start the game
+        pg.display.flip()
+        self.wait_for_key()
+
+    # defines the wait for key method
+    def wait_for_key(self):
+        # when we are waiting, the clock ticks
+        waiting = True
+        while waiting:
+            # our clock ticks based on frames per second
+            self.clock.tick(FPS)
+            # when we quit the game, run the quit method and we are no longer waiting
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    waiting = False
+                    self.quit()
+                # when we release the key, we are no longer waiting
+                if event.type == pg.KEYUP:
+                    waiting = False
 
 # Create a new game
 g = Game()
-# g.show_start_screen()
+g.show_start_screen()
 while True:
     # create new game
     g.new()
