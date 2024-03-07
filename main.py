@@ -213,6 +213,16 @@ class Game:
         pg.display.flip()
         self.wait_for_key()
 
+    # creates victory screen
+    def show_victory_screen(self):
+        # fills the background color
+        self.screen.fill(BGCOLOR)
+        # draws text on the background
+        self.draw_text(self.screen, "YOU WIN!", 24, WHITE, WIDTH/2 - 32, 2)
+        # waits for a keyboard input to return to menu
+        pg.display.flip()
+        self.wait_for_key()
+
     # defines the wait for key method
     def wait_for_key(self):
         # when we are waiting, the clock ticks
@@ -231,6 +241,7 @@ class Game:
 
 # Create a new game
 g = Game()
+# shows the start screen
 g.show_start_screen()
 while True:
     # create new game

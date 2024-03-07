@@ -164,6 +164,7 @@ class Player(pg.sprite.Sprite):
         # adds actions based on our moneybag count and hitpoint value
         if self.moneybag == 10:
             print("You win!")
+            self.game.show_victory_screen()
         if self.hitpoints <= 0:
             print("You suck")
             self.game.show_loss_screen()
