@@ -32,6 +32,8 @@ class Game:
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         # sets the title of the game
         pg.display.set_caption(TITLE)
+        # allows us to access information from the player class
+        self.player = Player
         # setting game clock
         self.clock = pg.time.Clock()
         # Allows us to store information and set highscores
@@ -198,7 +200,7 @@ class Game:
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, "Press a Key to Begin", 24, WHITE, WIDTH/2 - 32, 2)
+        self.draw_text(self.screen, "Press a Key to Begin. Collect the coins without touching the enemies.", 24, WHITE, WIDTH/4 - 32, 2)
         # waits for a keyboard input to start the game
         pg.display.flip()
         self.wait_for_key()
@@ -209,9 +211,9 @@ class Game:
         self.screen.fill(BGCOLOR)
         # draws text on the background
         self.draw_text(self.screen, "YOU SUCK!", 24, WHITE, WIDTH/2 - 32, 2)
-        # waits for a keyboard input to return to menu
+        # runs the game over method and opens the menu without closing it
         pg.display.flip()
-        self.wait_for_key()
+        self.game_over()
 
     # creates victory screen
     def show_victory_screen(self):
@@ -219,9 +221,9 @@ class Game:
         self.screen.fill(BGCOLOR)
         # draws text on the background
         self.draw_text(self.screen, "YOU WIN!", 24, WHITE, WIDTH/2 - 32, 2)
-        # waits for a keyboard input to return to menu
+        # runs the game over method and opens the menu without closing it
         pg.display.flip()
-        self.wait_for_key()
+        self.game_over()
 
     # defines the wait for key method
     def wait_for_key(self):
@@ -238,6 +240,19 @@ class Game:
                 # when we release the key, we are no longer waiting
                 if event.type == pg.KEYUP:
                     waiting = False
+
+    # creates a new method that does not remove the menu when we release a key
+    def game_over(self):
+        # when we are waiting, the clock ticks
+        waiting = True
+        while waiting:
+            # our clock ticks based on frames per second
+            self.clock.tick(FPS)
+            # when we quit the game, run the quit method and we are no longer waiting
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    waiting = False
+                    self.quit()
 
 # Create a new game
 g = Game()
