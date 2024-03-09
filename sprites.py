@@ -383,13 +383,13 @@ class SuperMob(pg.sprite.Sprite):
 
         # makes our velocity depend on the player's velocity and position so that we follow it
         if self.rect.x < self.game.player1.rect.x:
-            self.vx = 200
+            self.vx = 150
         if self.rect.x > self.game.player1.rect.x:
-            self.vx = -200    
+            self.vx = -150    
         if self.rect.y < self.game.player1.rect.y:
-            self.vy = 200
+            self.vy = 150
         if self.rect.y > self.game.player1.rect.y:
-            self.vy = -200
+            self.vy = -150
         # codes collision with walls
         # disables collision with walls
         self.rect.x = self.x
