@@ -17,10 +17,8 @@ class Player(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         # Allows player to have access to the game information
         self.game = game
-        # makes dimenensions for self.image
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        # fills self.image with green color
-        self.image.fill(GREEN)
+        # sets the player image
+        self.image = game.player_img
         # gives size and position of the rectangle
         self.rect = self.image.get_rect()
         # establishes x-coordinate of player
@@ -136,6 +134,9 @@ class Player(pg.sprite.Sprite):
                 # reduces our hitpoints when we contact a super mob
                 print("Collided with super mob")
                 self.hitpoints -= 1
+            if str(hits[0].__class__.__name__) == "Shield":
+                # adds hitpoints when we hit a shield powerup
+                self.hitpoints += 10
 
     def update(self):
         # gives access to keyboard inputs
@@ -160,12 +161,16 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.mobs, False)
         # adds collision for super mobs
         self.collide_with_group(self.game.super_mobs, False)
+        # adds collision for invincibility powerup
+        self.collide_with_group(self.game.shield, True)
 
         # adds actions based on our moneybag count and hitpoint value
         if self.moneybag == 10:
+            # prints you win and shows victory screen when we collect 10 coins
             print("You win!")
             self.game.show_victory_screen()
         if self.hitpoints <= 0:
+            # prints you suck and shows loss screen when our hitpoints is 0 or negative
             print("You suck")
             self.game.show_loss_screen()
 
@@ -266,6 +271,29 @@ class SpeedDown(pg.sprite.Sprite):
         self.x = x
         self.y = y
         # sets the position and size of the power up
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
+
+# creates new powerup class
+class Shield(pg.sprite.Sprite):
+    # initializes the class
+    def __init__(self, game, x, y):
+        # adds the sprite to the all sprites group and to the power up group
+        self.groups = game.all_sprites, game.shield
+        # initializes the class
+        pg.sprite.Sprite.__init__(self, self.groups)
+        # sets the shield class game equal to the game
+        self.game = game
+        # sets the shield image
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        # sets the color of the shield power up
+        self.image.fill(DARKGREEN)
+        # allows us to get the rectangle
+        self.rect = self.image.get_rect()
+        # sets the x and y coordinates of the shield power up
+        self.x = x
+        self.y = y
+        # sets the position and size of the shield power up
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 

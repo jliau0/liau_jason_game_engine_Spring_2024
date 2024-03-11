@@ -42,6 +42,12 @@ class Game:
         # defines the load data method
     def load_data(self):
         game_folder = path.dirname(__file__)
+        # allows us to access images from the image folder
+        self.img_folder = path.join(game_folder, 'images')
+
+        # allow us to use an image for the player image
+        self.player_img = pg.image.load(path.join(self.img_folder, 'smiley.png')).convert_alpha()
+
         # empty list for map data
         self.map_data = []
         # 'r'     open for reading (default)
@@ -77,6 +83,7 @@ class Game:
         self.speed_down = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
         self.super_mobs = pg.sprite.Group()
+        self.shield = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -115,6 +122,8 @@ class Game:
                 # places a super mob where we place "M" on the map
                 if tile == "m":
                     SuperMob(self, col, row)
+                if tile == "I":
+                    Shield(self, col, row)
 
     # Runs our game - Starts game
     def run(self):
