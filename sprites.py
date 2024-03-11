@@ -216,9 +216,7 @@ class Coin(pg.sprite.Sprite):
         # sets the coin class game equal to the game
         self.game = game
         # sets the coin image
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        # sets the color of the coin
-        self.image.fill(YELLOW)
+        self.image = game.coin_img
         # allows us to get the rectangle
         self.rect = self.image.get_rect()
         # sets the x and y coordinates of the coin
@@ -239,9 +237,7 @@ class PowerUp(pg.sprite.Sprite):
         # sets the power up class game equal to the game
         self.game = game
         # sets the power up image
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        # sets the color of the power up
-        self.image.fill(PURPLE)
+        self.image = game.speedUp_img
         # allows us to get the rectangle
         self.rect = self.image.get_rect()
         # sets the x and y coordinates of the power up
@@ -262,9 +258,7 @@ class SpeedDown(pg.sprite.Sprite):
         # sets the power up class game equal to the game
         self.game = game
         # sets the power up image
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        # sets the color of the power up
-        self.image.fill(ORANGE)
+        self.image = game.slowDown_img
         # allows us to get the rectangle
         self.rect = self.image.get_rect()
         # sets the x and y coordinates of the power up

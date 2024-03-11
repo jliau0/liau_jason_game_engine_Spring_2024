@@ -56,6 +56,12 @@ class Game:
         self.supermob_img = pg.image.load(path.join(self.img_folder, 'angry.png')).convert_alpha()
         # allow us to use an image for the shield image
         self.shield_img = pg.image.load(path.join(self.img_folder, 'shield.png')).convert_alpha()
+        # allow us to use an image for the coin image
+        self.coin_img = pg.image.load(path.join(self.img_folder, 'coin.png')).convert_alpha()
+        # allow us to use an image for the speed up powerup image
+        self.speedUp_img = pg.image.load(path.join(self.img_folder, 'speedUp.png')).convert_alpha()
+        # allow us to use an image for the slow down powerup image
+        self.slowDown_img = pg.image.load(path.join(self.img_folder, 'slowDown.png')).convert_alpha()
 
         # empty list for map data
         self.map_data = []
@@ -278,7 +284,7 @@ class Game:
                 if event.type == pg.QUIT:
                     waiting = False
                     self.quit()
-
+                      
 # Create a new game
 g = Game()
 # shows the start screen
