@@ -21,7 +21,7 @@ goal - collect coins before enemy kills you
 rules - do not move beyond boundries, kill enemies before time runs out/before enemy kills you
 freedom - movement
 feedback - enemy dies/coins disappear/victory screen
-Sentence: The player runs into/interacts with the enemy and the enemy dies (and the victory screen appears)
+Sentence: The player runs into and collects coins and the victory screen appears when all the coins are gone.
 '''  
 # This creates a "mold" for our game - Game blueprint
 class Game:
