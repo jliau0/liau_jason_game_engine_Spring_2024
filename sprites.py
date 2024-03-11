@@ -285,9 +285,7 @@ class Shield(pg.sprite.Sprite):
         # sets the shield class game equal to the game
         self.game = game
         # sets the shield image
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        # sets the color of the shield power up
-        self.image.fill(DARKGREEN)
+        self.image = game.shield_img
         # allows us to get the rectangle
         self.rect = self.image.get_rect()
         # sets the x and y coordinates of the shield power up

@@ -54,6 +54,8 @@ class Game:
         self.mob_img = pg.image.load(path.join(self.img_folder, 'frowny.png')).convert_alpha()
         # allow us to use an image for the supermob image
         self.supermob_img = pg.image.load(path.join(self.img_folder, 'angry.png')).convert_alpha()
+        # allow us to use an image for the shield image
+        self.shield_img = pg.image.load(path.join(self.img_folder, 'shield.png')).convert_alpha()
 
         # empty list for map data
         self.map_data = []
