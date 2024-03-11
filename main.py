@@ -209,12 +209,11 @@ class Game:
     # creates loss screen
     def show_loss_screen(self):
         # Creates bank of insults
-        myinsults = ["You smell bad.", "YOU SUCK!", "What are you doing?", "No one likes you.", "Really?", "Were you even trying?", "Wow. That sucked."]
-
+        myinsults = ["You smell bad.", "YOU SUCK!", "What are you doing?", "No one likes you.", "Really?", "Were you even trying?", "Wow. That sucked.", "You need an easy mode."]
         # fills the background color
         self.screen.fill(BGCOLOR)
-        # draws text on the backgroundw
-        # Adds random insult when you die
+        # draws text on the background
+        # Adds random insult when you die - center centers the text in the space of 200 characters
         self.draw_text(self.screen, random.choice(myinsults).center(200), 24, WHITE, 0, HEIGHT/2 - 24)
         # runs the game over method and opens the menu without closing it
         pg.display.flip()
@@ -222,10 +221,13 @@ class Game:
 
     # creates victory screen
     def show_victory_screen(self):
+        # Creates bank of compliments
+        mycompliments = ["YOU WIN!", "Too easy.", "Everyone likes you.", "You made that look easy!"]
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, "YOU WIN!", 24, WHITE, WIDTH/2 - 32, 2)
+        # adds random compliment when you win - center centers the text in the space of 200 characters
+        self.draw_text(self.screen, random.choice(mycompliments).center(200), 24, WHITE, 0, HEIGHT/2 - 24)
         # runs the game over method and opens the menu without closing it
         pg.display.flip()
         self.game_over()
