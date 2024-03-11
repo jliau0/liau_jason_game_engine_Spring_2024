@@ -5,6 +5,7 @@ import pygame as pg
 from settings import *
 # Allows us to use random elements
 from random import randint
+import random
 # Allows us to use information from sprites
 from sprites import *
 # Imports the sys module (gives access to windows so we can close the window)
@@ -207,10 +208,14 @@ class Game:
 
     # creates loss screen
     def show_loss_screen(self):
+        # Creates bank of insults
+        myinsults = ["You smell bad.", "YOU SUCK!", "What are you doing?", "No one likes you."]
+
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, "YOU SUCK!", 24, WHITE, WIDTH/2 - 32, 2)
+        # Adds random insult when you die
+        self.draw_text(self.screen, random.choice(myinsults).center(200), 24, WHITE, 0, HEIGHT/2 - 24)
         # runs the game over method and opens the menu without closing it
         pg.display.flip()
         self.game_over()
