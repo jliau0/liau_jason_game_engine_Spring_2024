@@ -306,10 +306,8 @@ class Mob(pg.sprite.Sprite):
         # initializes the mob and groups
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        # sets appearance of the mob
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        # sets color to red
-        self.image.fill(RED)
+        # sets appearance of the mob as an image
+        self.image = game.mob_img
         # sets the rectangle and position of rectangle for the mob
         self.rect = self.image.get_rect()
         self.x = x
@@ -369,10 +367,8 @@ class SuperMob(pg.sprite.Sprite):
         # initializes the mob and groups
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        # sets appearance of the mob
-        self.image = pg.Surface((TILESIZE, TILESIZE))
-        # sets color to red
-        self.image.fill(DARKRED)
+        # sets appearance of the mob as an image
+        self.image = game.supermob_img
         # sets the rectangle and position of rectangle for the mob
         self.rect = self.image.get_rect()
         self.x = x

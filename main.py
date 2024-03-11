@@ -17,6 +17,9 @@ from os import path
 menu
 more powerup types
 enemy kills you
+images for characters
+random compliment and insult generators
+
 goal - collect coins before enemy kills you
 rules - do not move beyond boundries, kill enemies before time runs out/before enemy kills you
 freedom - movement
@@ -47,6 +50,10 @@ class Game:
 
         # allow us to use an image for the player image
         self.player_img = pg.image.load(path.join(self.img_folder, 'smiley.png')).convert_alpha()
+        # allow us to use an image for the mob image
+        self.mob_img = pg.image.load(path.join(self.img_folder, 'frowny.png')).convert_alpha()
+        # allow us to use an image for the supermob image
+        self.supermob_img = pg.image.load(path.join(self.img_folder, 'angry.png')).convert_alpha()
 
         # empty list for map data
         self.map_data = []
