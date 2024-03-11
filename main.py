@@ -209,11 +209,11 @@ class Game:
     # creates loss screen
     def show_loss_screen(self):
         # Creates bank of insults
-        myinsults = ["You smell bad.", "YOU SUCK!", "What are you doing?", "No one likes you."]
+        myinsults = ["You smell bad.", "YOU SUCK!", "What are you doing?", "No one likes you.", "Really?", "Were you even trying?", "Wow. That sucked."]
 
         # fills the background color
         self.screen.fill(BGCOLOR)
-        # draws text on the background
+        # draws text on the backgroundw
         # Adds random insult when you die
         self.draw_text(self.screen, random.choice(myinsults).center(200), 24, WHITE, 0, HEIGHT/2 - 24)
         # runs the game over method and opens the menu without closing it
