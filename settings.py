@@ -2,7 +2,7 @@
 WIDTH = 1024
 HEIGHT = 768
 # This sets the display width and height
-TITLE = "My Fun Game"
+TITLE = "Smiley or Frowny"
 # This sets the title of the game
 TILESIZE = 32
 

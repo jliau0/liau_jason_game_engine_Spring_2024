@@ -19,6 +19,7 @@ more powerup types
 enemy kills you
 images for characters
 random compliment and insult generators
+added new mob type
 
 goal - collect coins before enemy kills you
 rules - do not move beyond boundries, kill enemies before time runs out/before enemy kills you
@@ -137,7 +138,8 @@ class Game:
                 # places a super mob where we place "M" on the map
                 if tile == "m":
                     SuperMob(self, col, row)
-                if tile == "I":
+                # places a shield powerup where we place "p" on the map
+                if tile == "p":
                     Shield(self, col, row)
 
     # Runs our game - Starts game
@@ -284,7 +286,7 @@ class Game:
                 if event.type == pg.QUIT:
                     waiting = False
                     self.quit()
-                      
+
 # Create a new game
 g = Game()
 # shows the start screen
