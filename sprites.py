@@ -122,10 +122,10 @@ class Player(pg.sprite.Sprite):
                 # allows us to do things based on when we collide with a powerup
             if str(hits[0].__class__.__name__) == "PowerUp":
                 # makes us faster when we hit a powerup
-                self.speed += 300
+                self.speed += 150
             if str(hits[0].__class__.__name__) == "SpeedDown":
                 # makes us slower when we hit a speed down powerup
-                self.speed -= 300
+                self.speed -= 150
             if str(hits[0].__class__.__name__) == "Mob":
                 # reduces our hitpoints when we contact a mob
                 print("Collided with mob")
