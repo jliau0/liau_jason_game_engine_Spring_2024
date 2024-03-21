@@ -21,6 +21,13 @@ images for characters
 random compliment and insult generators
 added new mob type
 
+Additional goals:
+Restart the game from the menu
+Add projectiles/Way to kill mobs
+Add new levels
+Add chests
+Add more powerups
+
 goal - collect coins before enemy kills you
 rules - do not move beyond boundries, kill enemies before time runs out/before enemy kills you
 freedom - movement
