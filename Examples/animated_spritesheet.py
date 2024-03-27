@@ -11,6 +11,7 @@ clock = pg.time.Clock()
 current_frame = 0
 last_update = 0
 
+# creates a function that animates/prints the frame we want to animate and the ticks
 def animate():
     global last_update
     global current_frame
