@@ -14,6 +14,16 @@ import sys
 from os import path
 
 '''
+I chose to ask my father about five fun aspects of my game. These are the five aspects he chose.
+1. The random insult and compliment generators - Create a humorous sense of accomplishment and failure
+2. Using multiple speed powerups at once - Creates a sense of exciting, wild speed
+3. The theme of the map and sprites - Creates a fun, unique atmosphere for the game
+4. The variety of powerups, both positive and negative - Allows the player to explore different actions and possibilities during each life
+5. The high speed of the yellow mobs - Creates a sense of an exciting, high-speed chase
+He also recomended that I add more levels to create a more challenging game with more interesting gameplay.
+'''
+
+'''
 menu
 more powerup types
 enemy kills you
