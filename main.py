@@ -263,7 +263,7 @@ class Game:
     # creates victory screen
     def show_victory_screen(self):
         # Creates bank of compliments
-        mycompliments = ["YOU WIN!", "Too easy.", "Everyone likes you.", "You made that look easy!"]
+        mycompliments = ["YOU WIN!", "Too easy.", "Everyone likes you.", "You made that look easy!", "Wow!", "Nice work!"]
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
