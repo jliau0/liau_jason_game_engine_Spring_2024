@@ -21,9 +21,7 @@ I chose to ask my father about five fun aspects of my game. These are the five a
 4. The variety of powerups, both positive and negative - Allows the player to explore different actions and possibilities during each life
 5. The high speed of the yellow mobs - Creates a sense of an exciting, high-speed chase
 He also recomended that I add more levels to create a more challenging game with more interesting gameplay.
-'''
 
-'''
 menu
 more powerup types
 enemy kills you
