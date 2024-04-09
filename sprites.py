@@ -164,9 +164,9 @@ class Player(pg.sprite.Sprite):
         # adds collision for invincibility powerup
         self.collide_with_group(self.game.shield, True)
 
-        # adds actions based on our moneybag count and hitpoint value
-        if self.moneybag == 11:
-            # prints you win and shows victory screen when we collect 10 coins
+        ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
+        if self.moneybag == 11 and self.game.current_level == 'LEVEL2':
+            # prints you win and shows victory screen when we collect 11 coins on the final level
             print("You win!")
             self.game.show_victory_screen()
         if self.hitpoints <= 0:

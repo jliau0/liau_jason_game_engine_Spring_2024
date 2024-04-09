@@ -61,10 +61,11 @@ class Game:
         # Allows us to store information and set highscores
         self.load_data()
         # defines the load data method
+        self.current_level = 'LEVEL1'
     def load_data(self):
-        game_folder = path.dirname(__file__)
+        self.game_folder = path.dirname(__file__)
         # allows us to access images from the image folder
-        self.img_folder = path.join(game_folder, 'images')
+        self.img_folder = path.join(self.game_folder, 'images')
 
         # allow us to use an image for the player image
         self.player_img = pg.image.load(path.join(self.img_folder, 'smiley.png')).convert_alpha()
@@ -99,11 +100,64 @@ class Game:
         after it is used. This can help to prevent errors and leaks.
         '''
         # Allows us to access/make the map
-        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
+        with open(path.join(self.game_folder, 'LEVEL1.txt'), 'rt') as f:
             for line in f:
                 # prints the map
                 print(line)
                 self.map_data.append(line)
+
+     # added level change method
+    def change_level(self, lvl):
+        # sets current level (Help by Aayush)
+        self.current_level = lvl[:-4]
+        # kills the sprites that are already on the screen
+        for s in self.all_sprites:
+            s.kill()
+        # resets the moneybag
+        self.player.moneybag = 0
+        # resets the map
+        self.map_data = []
+        # opens the new level
+        with open(path.join(self.game_folder, lvl), 'rt') as f:
+            # prints the map data
+            for line in f:
+                print(line)
+                self.map_data.append(line)
+        # prints items on the map
+        for row, tiles in enumerate(self.map_data):
+            # prints the items on our new map
+            print(row)
+            # prints the columns in our new map
+            for col, tile in enumerate(tiles):
+                print(col)
+                # places a wall where we mark 1 in level2.txt
+                if tile == '1':
+                    print("a wall at", row, col)
+                    Wall(self, col, row)
+                    # places the player where we mark P in level2.txt
+                if tile == "P":
+                    self.player1 = Player(self, row, col)
+                # if tile == "p":
+                #     self.player2 = Player(self, row, col)
+                # Places a coin if the title of the location on the map is "C"
+                if tile == "C":
+                    Coin(self, col, row)
+                # places a powerup where we place "P" on the map
+                if tile == "S":
+                    PowerUp(self, col, row)
+                # places a speed down powerup where we place "s" on the map
+                if tile == "s":
+                    SpeedDown(self, col, row)
+                # places a mob where we place "M" on the map
+                if tile == "M":
+                    Mob(self, col, row)
+                # places a super mob where we place "M" on the map
+                if tile == "m":
+                    SuperMob(self, col, row)
+                # places a shield powerup where we place "p" on the map
+                if tile == "p":
+                    Shield(self, col, row)
+                    
     # Creates a method that runs the game
     def new(self):
         # prints "create new game..."
@@ -185,6 +239,10 @@ class Game:
     def update(self):
         # This runs everything update (enemies march, powerups bob up and down)
         self.all_sprites.update()
+
+        # changes the level if we have 11 coins on level 1
+        if self.player1.moneybag == 11 and self.current_level == 'LEVEL1':
+            self.change_level("LEVEL2.txt")
 
     def draw_grid(self):
          for x in range(0, WIDTH, TILESIZE):
