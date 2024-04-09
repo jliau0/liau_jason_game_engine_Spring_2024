@@ -29,10 +29,12 @@ images for characters
 random compliment and insult generators
 added new mob type
 
+Primary goals:
+Restart game from menu
+New levels
+Way to kill mobs
+
 Additional goals:
-Restart the game from the menu
-Add projectiles/Way to kill mobs
-Add new levels
 Add chests
 Add more powerups
 
