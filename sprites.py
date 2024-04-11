@@ -23,7 +23,7 @@ class Spritesheet:
         image = pg.Surface((width, height))
         image.blit(self.spritesheet, (0, 0), (x, y, width, height))
         # image = pg.transform.scale(image, (width, height))
-        image = pg.transform.scale(image, (width * 4, height * 4))
+        image = pg.transform.scale(image, (width, height))
         return image
     
 
@@ -64,8 +64,8 @@ class Player(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         # Allows player to have access to the game information
         self.game = game
-        self.load_images()
         self.spritesheet = Spritesheet(path.join(img_dir, 'theBell.png'))
+        self.load_images()
         # sets the player image
         self.image = game.player_img
         # gives size and position of the rectangle
@@ -84,8 +84,10 @@ class Player(pg.sprite.Sprite):
         self.speed = 301
         self.moneybag = 0
         self.hitpoints = 1
-        self.current_fame = 0
+        self.current_frame = 0
         self.last_update = 0
+        self.jumping = False
+        self.walking = False
 
     # allows us to access keyboard inputs
     def get_keys(self):
