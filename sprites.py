@@ -4,8 +4,55 @@
 # allows us to use pygame and imports game settings
 import pygame as pg
 from settings import *
+from os import path
 
-# testing github upload
+SPRITESHEET = "theBell.png"
+
+dir = path.dirname(__file__)
+img_dir = path.join(dir, 'images')
+
+
+# sets up file with multiple images...
+class Spritesheet:
+    # utility class for loading and parsing spritesheets
+    def __init__(self, filename):
+        self.spritesheet = pg.image.load(filename).convert()
+
+    def get_image(self, x, y, width, height):
+        # grab an image out of a larger spritesheet
+        image = pg.Surface((width, height))
+        image.blit(self.spritesheet, (0, 0), (x, y, width, height))
+        # image = pg.transform.scale(image, (width, height))
+        image = pg.transform.scale(image, (width * 4, height * 4))
+        return image
+    
+
+# class Animated_sprite(Sprite):
+#     def __init__(self):
+#         Sprite.__init__(self)
+#         self.spritesheet = Spritesheet(path.join(img_dir, SPRITESHEET))
+#         self.load_images()
+#         self.image = self.standing_frames[0]
+#         self.rect = self.image.get_rect()
+#         self.current_frame = 0
+#         self.last_update = 0
+        
+    # def load_images(self):
+    #     self.standing_frames = [self.spritesheet.get_image(0, 0, 32, 32),
+    #                             self.spritesheet.get_image(32, 0, 32, 32)]
+    #     for frame in self.standing_frames:
+    #         frame.set_colorkey(BLACK)
+    #     self.walk_frames_r = [self.spritesheet.get_image(678, 860, 120, 201),
+    #                           self.spritesheet.get_image(692, 1458, 120, 207)]
+    #     self.walk_frames_l = []
+    #     for frame in self.walk_frames_r:
+    #         frame.set_colorkey(BLACK)
+    #         self.walk_frames_l.append(pg.transform.flip(frame, True, False))
+    #     self.jump_frame = self.spritesheet.get_image(256, 0, 128, 128)
+    #     self.jump_frame.set_colorkey(BLACK)
+    # def update(self):
+    #     self.animate()
+
 
 # Create a "mold" for the player - Inherits from pg.sprite.Sprite - Subclass of pg.sprite.Sprite
 class Player(pg.sprite.Sprite):
@@ -17,6 +64,8 @@ class Player(pg.sprite.Sprite):
         pg.sprite.Sprite.__init__(self, self.groups)
         # Allows player to have access to the game information
         self.game = game
+        self.load_images()
+        self.spritesheet = Spritesheet(path.join(img_dir, 'theBell.png'))
         # sets the player image
         self.image = game.player_img
         # gives size and position of the rectangle
@@ -35,6 +84,8 @@ class Player(pg.sprite.Sprite):
         self.speed = 301
         self.moneybag = 0
         self.hitpoints = 1
+        self.current_fame = 0
+        self.last_update = 0
 
     # allows us to access keyboard inputs
     def get_keys(self):
@@ -109,6 +160,11 @@ class Player(pg.sprite.Sprite):
             return True
         # return true when we hit a coin
 
+    # accesses images for animation
+    def load_images(self):
+        self.standing_frames = [self.spritesheet.get_image(0, 0, 32, 32),
+                                self.spritesheet.get_image(32, 0, 32, 32)]
+
     # made possible by Aayush's question
     # Creates a method for the collision
     # Kill determines whether the coin disappears
@@ -137,6 +193,17 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "Shield":
                 # adds hitpoints when we hit a shield powerup
                 self.hitpoints += 10
+
+    def animate(self):
+        now = pg.time.get_ticks()
+        if not self.jumping and not self.walking:
+            if now - self.last_update > 500:
+                self.last_update = now
+                self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
+                bottom = self.rect.bottom
+                self.image = self.standing_frames[self.current_frame]
+                self.rect = self.image.get_rect()
+                self.rect.bottom = bottom
 
     def update(self):
         # gives access to keyboard inputs
@@ -173,6 +240,9 @@ class Player(pg.sprite.Sprite):
             # prints you suck and shows loss screen when our hitpoints is 0 or negative
             print("You suck")
             self.game.show_loss_screen()
+
+        # updates our animation
+        self.animate()
 
         # coin_hits = pg.sprite.spritecollide(self.game.coins, True)
         # if coin_hits:
