@@ -12,18 +12,19 @@ dir = path.dirname(__file__)
 img_dir = path.join(dir, 'images')
 
 
-# sets up file with multiple images...
+# allows us to use multiple images from a file
 class Spritesheet:
-    # utility class for loading and parsing spritesheets
+    # allows us to use the images from our spritesheet
     def __init__(self, filename):
         self.spritesheet = pg.image.load(filename).convert()
 
     def get_image(self, x, y, width, height):
-        # grab an image out of a larger spritesheet
+        # pull an image from a larger spreadsheet
         image = pg.Surface((width, height))
         image.blit(self.spritesheet, (0, 0), (x, y, width, height))
         # image = pg.transform.scale(image, (width, height))
         image = pg.transform.scale(image, (width, height))
+        # Gives us the iamge that we want to pull from the spritesheet
         return image
     
 
@@ -196,13 +197,17 @@ class Player(pg.sprite.Sprite):
                 # adds hitpoints when we hit a shield powerup
                 self.hitpoints += 10
 
+    # Animates our sprite based on the time
     def animate(self):
         now = pg.time.get_ticks()
+        # sets the frames based on our state
         if not self.jumping and not self.walking:
             if now - self.last_update > 500:
                 self.last_update = now
+                # accesses the frame that we are on
                 self.current_frame = (self.current_frame + 1) % len(self.standing_frames)
                 bottom = self.rect.bottom
+                # sets image position and current image
                 self.image = self.standing_frames[self.current_frame]
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
@@ -234,7 +239,7 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.shield, True)
 
         ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
-        if self.moneybag == 11 and self.game.current_level == 'LEVEL2':
+        if self.moneybag == 11 and self.game.current_level == 'LEVEL':
             # prints you win and shows victory screen when we collect 11 coins on the final level
             print("You win!")
             self.game.show_victory_screen()
@@ -484,6 +489,70 @@ class SuperMob(pg.sprite.Sprite):
         # self.collide_with_walls('x')
         self.rect.y = self.y
         # self.collide_with_walls('y')
+
+class BossMob(pg.sprite.Sprite):
+    # instantiates mob
+    def __init__(self, game, x, y):
+        # adds super mob to all sprites and mobs
+        self.groups = game.all_sprites, game.super_mobs
+        # initializes the mob and groups
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        # sets appearance of the mob as an image
+        self.image = game.supermob_img
+        # sets the rectangle and position of rectangle for the mob
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        # sets the speed of the mob
+        self.vx, self.vy = 100, 100
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        self.speed = 1
+        # sets collision with walls for the mob
+    def collide_with_walls(self, dir):
+        # sets collision with walls in the x-direction
+        if dir == 'x':
+            # print('colliding on the x')
+            # makes it so that the wall does not disappear when we contact it
+            hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            # adjusts velocity when we contact a wall
+            if hits:
+                self.vx *= -1
+                self.rect.x = self.x
+                # sets collision for the y direction
+        if dir == 'y':
+            # print('colliding on the y')
+            # makes it so that the wall does not disappear when we contact it
+            hits = pg.sprite.spritecollide(self, self.game.walls, False)
+            # adjusts velocity when we contact wall
+            if hits:
+                self.vy *= -1
+                self.rect.y = self.y
+
+    def update(self):
+        # self.rect.x += 1
+        # controls velocity and position
+        self.x += self.vx * self.game.dt
+        self.y += self.vy * self.game.dt
+
+        # makes our velocity depend on the player's velocity and position so that we follow it
+        if self.rect.x < self.game.player1.rect.x:
+            self.vx = 150
+        if self.rect.x > self.game.player1.rect.x:
+            self.vx = -150    
+        if self.rect.y < self.game.player1.rect.y:
+            self.vy = 150
+        if self.rect.y > self.game.player1.rect.y:
+            self.vy = -150
+        # codes collision with walls
+        # disables collision with walls
+        self.rect.x = self.x
+        # self.collide_with_walls('x')
+        self.rect.y = self.y
+        # self.collide_with_walls('y')
+
+
 
 
 
