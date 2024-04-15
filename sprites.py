@@ -239,7 +239,7 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.shield, True)
 
         ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
-        if self.moneybag == 11 and self.game.current_level == 'LEVEL':
+        if self.moneybag == 11 and self.game.current_level == 'LEVEL3':
             # prints you win and shows victory screen when we collect 11 coins on the final level
             print("You win!")
             self.game.show_victory_screen()
