@@ -84,6 +84,8 @@ class Game:
         self.speedUp_img = pg.image.load(path.join(self.img_folder, 'speedUp.png')).convert_alpha()
         # allow us to use an image for the slow down powerup image
         self.slowDown_img = pg.image.load(path.join(self.img_folder, 'slowDown.png')).convert_alpha()
+        # allow us to use an image for the boss mob image
+        self.bossmob_img = pg.image.load(path.join(self.img_folder, 'boss.png')).convert_alpha()
 
         # empty list for map data
         self.map_data = []
@@ -160,6 +162,9 @@ class Game:
                 # places a shield powerup where we place "p" on the map
                 if tile == "p":
                     Shield(self, col, row)
+                # places a boss mob where we place "b" on the map
+                if tile == "b":
+                    BossMob(self, col, row)
 
     def restart_game(self, lvl):
         # sets current level as level 1 (Help by Aayush)
@@ -211,6 +216,10 @@ class Game:
                 # places a shield powerup where we place "p" on the map
                 if tile == "p":
                     Shield(self, col, row)
+                # places a boss mob where we place "b" on the map
+                if tile == "b":
+                    BossMob(self, col, row)
+
                     
     # Creates a method that runs the game
     def new(self):
@@ -225,6 +234,7 @@ class Game:
         self.mobs = pg.sprite.Group()
         self.super_mobs = pg.sprite.Group()
         self.shield = pg.sprite.Group()
+        self.boss_mobs = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -266,6 +276,10 @@ class Game:
                 # places a shield powerup where we place "p" on the map
                 if tile == "p":
                     Shield(self, col, row)
+                # places a boss mob where we place "b" on the map
+                if tile == "b":
+                    BossMob(self, col, row)
+
 
     # Runs our game - Starts game
     def run(self):
@@ -295,12 +309,20 @@ class Game:
         self.all_sprites.update()
 
         # changes the level if we have 11 coins on level 1
-        if self.player1.moneybag == 11 and self.current_level == 'LEVEL1':
+        if self.player1.moneybag == 1 and self.current_level == 'LEVEL1':
             self.change_level("LEVEL2.txt")
 
         # Changes level to level 3 if we have 11 coins on level 2
-        if self.player1.moneybag == 11 and self.current_level == 'LEVEL2':
+        if self.player1.moneybag == 1 and self.current_level == 'LEVEL2':
             self.change_level("LEVEL3.txt")
+
+        # Changes level to level 4 if we have 11 coins on level 3
+        if self.player1.moneybag == 1 and self.current_level == 'LEVEL3':
+            self.change_level("LEVEL4.txt")
+
+        # Changes level to level 5 if we have 11 coins on level 4
+        if self.player1.moneybag == 1 and self.current_level == 'LEVEL4':
+            self.change_level("LEVEL5.txt")
 
     def draw_grid(self):
          for x in range(0, WIDTH, TILESIZE):
@@ -364,6 +386,16 @@ class Game:
         # waits for a keyboard input to start the game
         pg.display.flip()
         self.wait_for_key()
+
+    # # creates boss level prepare screen
+    # def show_prepare_screen(self):
+    #     # fills the background color
+    #     self.screen.fill(BGCOLOR)
+    #     # draws text on the background
+    #     self.draw_text(self.screen, "BOSS LEVEL - Press any key to continue...", 24, WHITE, WIDTH/4 - 32, 2)
+    #     # waits for a keyboard input to start the game
+    #     pg.display.flip()
+    #     self.wait_for_key()
 
     # creates loss screen
     def show_loss_screen(self):

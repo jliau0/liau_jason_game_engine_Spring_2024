@@ -196,6 +196,9 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "Shield":
                 # adds hitpoints when we hit a shield powerup
                 self.hitpoints += 10
+            if str(hits[0].__class__.__name__) == "BossMob":
+                # adds hitpoints when we hit a shield powerup
+                self.hitpoints -= 10
 
     # Animates our sprite based on the time
     def animate(self):
@@ -235,11 +238,13 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.mobs, False)
         # adds collision for super mobs
         self.collide_with_group(self.game.super_mobs, False)
-        # adds collision for invincibility powerup
+        # adds collision for shield powerup
         self.collide_with_group(self.game.shield, True)
+        # adds collision for boss mob
+        self.collide_with_group(self.game.boss_mobs, False)
 
         ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
-        if self.moneybag == 11 and self.game.current_level == 'LEVEL3':
+        if self.moneybag == 225 and self.game.current_level == 'LEVEL5':
             # prints you win and shows victory screen when we collect 11 coins on the final level
             print("You win!")
             self.game.show_victory_screen()
@@ -491,15 +496,15 @@ class SuperMob(pg.sprite.Sprite):
         # self.collide_with_walls('y')
 
 class BossMob(pg.sprite.Sprite):
-    # instantiates mob
+    # instantiates boss mob
     def __init__(self, game, x, y):
         # adds super mob to all sprites and mobs
-        self.groups = game.all_sprites, game.super_mobs
+        self.groups = game.all_sprites, game.boss_mobs
         # initializes the mob and groups
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         # sets appearance of the mob as an image
-        self.image = game.supermob_img
+        self.image = game.bossmob_img
         # sets the rectangle and position of rectangle for the mob
         self.rect = self.image.get_rect()
         self.x = x
