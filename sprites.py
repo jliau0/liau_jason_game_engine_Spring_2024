@@ -244,7 +244,7 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.boss_mobs, False)
 
         ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
-        if self.moneybag == 225 and self.game.current_level == 'LEVEL5':
+        if self.moneybag == 100 and self.game.current_level == 'LEVEL5':
             # prints you win and shows victory screen when we collect 11 coins on the final level
             print("You win!")
             self.game.show_victory_screen()
@@ -527,7 +527,7 @@ class BossMob(pg.sprite.Sprite):
                 self.rect.x = self.x
                 # sets collision for the y direction
         if dir == 'y':
-            # print('colliding on the y')
+            # print('colliding on the 'y')
             # makes it so that the wall does not disappear when we contact it
             hits = pg.sprite.spritecollide(self, self.game.walls, False)
             # adjusts velocity when we contact wall
@@ -543,13 +543,13 @@ class BossMob(pg.sprite.Sprite):
 
         # makes our velocity depend on the player's velocity and position so that we follow it
         if self.rect.x < self.game.player1.rect.x:
-            self.vx = 150
+            self.vx = 175
         if self.rect.x > self.game.player1.rect.x:
-            self.vx = -150    
+            self.vx = -175    
         if self.rect.y < self.game.player1.rect.y:
-            self.vy = 150
+            self.vy = 175
         if self.rect.y > self.game.player1.rect.y:
-            self.vy = -150
+            self.vy = -175
         # codes collision with walls
         # disables collision with walls
         self.rect.x = self.x

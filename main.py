@@ -309,19 +309,19 @@ class Game:
         self.all_sprites.update()
 
         # changes the level if we have 11 coins on level 1
-        if self.player1.moneybag == 1 and self.current_level == 'LEVEL1':
+        if self.player1.moneybag == 11 and self.current_level == 'LEVEL1':
             self.change_level("LEVEL2.txt")
 
         # Changes level to level 3 if we have 11 coins on level 2
-        if self.player1.moneybag == 1 and self.current_level == 'LEVEL2':
+        if self.player1.moneybag == 11 and self.current_level == 'LEVEL2':
             self.change_level("LEVEL3.txt")
 
         # Changes level to level 4 if we have 11 coins on level 3
-        if self.player1.moneybag == 1 and self.current_level == 'LEVEL3':
+        if self.player1.moneybag == 11 and self.current_level == 'LEVEL3':
             self.change_level("LEVEL4.txt")
 
         # Changes level to level 5 if we have 11 coins on level 4
-        if self.player1.moneybag == 1 and self.current_level == 'LEVEL4':
+        if self.player1.moneybag == 11 and self.current_level == 'LEVEL4':
             self.change_level("LEVEL5.txt")
 
     def draw_grid(self):
