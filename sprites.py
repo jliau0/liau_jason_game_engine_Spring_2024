@@ -543,13 +543,13 @@ class BossMob(pg.sprite.Sprite):
 
         # makes our velocity depend on the player's velocity and position so that we follow it
         if self.rect.x < self.game.player1.rect.x:
-            self.vx = 175
+            self.vx = 200
         if self.rect.x > self.game.player1.rect.x:
-            self.vx = -175    
+            self.vx = -200    
         if self.rect.y < self.game.player1.rect.y:
-            self.vy = 175
+            self.vy = 200
         if self.rect.y > self.game.player1.rect.y:
-            self.vy = -175
+            self.vy = -200
         # codes collision with walls
         # disables collision with walls
         self.rect.x = self.x
