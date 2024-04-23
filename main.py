@@ -14,6 +14,9 @@ import sys
 from os import path
 
 '''
+Release version:
+Multiple players controlled with WASD keys and arrow keys
+
 Beta:
 Add boss fight/Boss level
 
@@ -58,7 +61,7 @@ class Game:
         # sets the title of the game
         pg.display.set_caption(TITLE)
         # allows us to access information from the player class
-        self.player = Player
+        self.player = Player1
         # setting game clock
         self.clock = pg.time.Clock()
         # Allows us to store information and set highscores
@@ -141,7 +144,7 @@ class Game:
                     Wall(self, col, row)
                     # places the player where we mark P in level2.txt
                 if tile == "P":
-                    self.player1 = Player(self, row, col)
+                    self.player1 = Player1(self, row, col)
                 # if tile == "p":
                 #     self.player2 = Player(self, row, col)
                 # Places a coin if the title of the location on the map is "C"
@@ -165,6 +168,9 @@ class Game:
                 # places a boss mob where we place "b" on the map
                 if tile == "b":
                     BossMob(self, col, row)
+                # places a second player where we place "2" on the map
+                if tile == "2":
+                    Player2(self, col, row)
 
     def restart_game(self, lvl):
         # sets current level as level 1 (Help by Aayush)
@@ -195,7 +201,7 @@ class Game:
                     Wall(self, col, row)
                     # places the player where we mark P in level2.txt
                 if tile == "P":
-                    self.player1 = Player(self, row, col)
+                    self.player1 = Player1(self, row, col)
                 # if tile == "p":
                 #     self.player2 = Player(self, row, col)
                 # Places a coin if the title of the location on the map is "C"
@@ -219,6 +225,10 @@ class Game:
                 # places a boss mob where we place "b" on the map
                 if tile == "b":
                     BossMob(self, col, row)
+                # places a second player where we place "2" on the map
+                if tile == "2":
+                    Player2(self, col, row)
+
 
                     
     # Creates a method that runs the game
@@ -255,7 +265,7 @@ class Game:
                     Wall(self, col, row)
                     # places the player where we mark P in map.txt
                 if tile == "P":
-                    self.player1 = Player(self, row, col)
+                    self.player1 = Player1(self, row, col)
                 # if tile == "p":
                 #     self.player2 = Player(self, row, col)
                 # Places a coin if the title of the location on the map is "C"
@@ -279,6 +289,10 @@ class Game:
                 # places a boss mob where we place "b" on the map
                 if tile == "b":
                     BossMob(self, col, row)
+                # places a second player where we place "2" on the map
+                if tile == "2":
+                    Player2(self, col, row)
+
 
 
     # Runs our game - Starts game
