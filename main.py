@@ -16,6 +16,12 @@ from os import path
 '''
 Release version:
 
+Release version feature brainstorm:
+Additional player as mob
+Different endings based on in-game choices/gameplay
+Storing powerups
+Helpful NPCs
+
 Beta:
 Add boss fight/Boss level
 
