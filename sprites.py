@@ -93,13 +93,14 @@ class Player(pg.sprite.Sprite):
         self.walking = False
         # sets up a cooldown for our powerups
         self.powered_up = False
-        # controls cooldown length
+        # controls cooldown length for powerups
         self.powerup_cooldown = 1
         self.powerup_timer = self.powerup_cooldown
 
     # allows us to access keyboard inputs
     def get_keys(self):
         # creates a cooldown when we are powered up
+        # counts down time from the timer when we are powered up
         if self.powered_up:
             self.powerup_timer -= self.game.dt
             if self.powerup_timer <= 0:
@@ -130,11 +131,13 @@ class Player(pg.sprite.Sprite):
             # makes it slower to travel along the hypotanuse
             self.vx *= 0.7071
             self.vy *= 0.7071
+        # makes it so that this happens when we press e, have one or more speed powerups, and are not powered up
         if keys[pg.K_e] and self.speed_powerups >= 1 and self.powered_up == False:
             # increases speed if we have one or more speed powerups and we press the e key
             self.powered_up = True
             self.speed += 300
             self.speed_powerups -= 1
+            # makes it so that this happens when we press e, have one or more speed powerups, and are not powered up
         if keys[pg.K_q] and self.shield_powerups >= 1 and self.powered_up == False:
             # increases health if we have one or more shield powerups and we press the q key
             self.powered_up = True
