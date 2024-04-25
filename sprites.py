@@ -82,16 +82,30 @@ class Player(pg.sprite.Sprite):
         self.y = y * TILESIZE
         self.moneybag = 0
         # allows us to access speed conveniently
-        self.speed = 301
+        self.speed = 50
         self.moneybag = 0
         self.hitpoints = 1
         self.current_frame = 0
         self.last_update = 0
+        self.speed_powerups = 0
+        self.shield_powerups = 0
         self.jumping = False
         self.walking = False
+        # sets up a cooldown for our powerups
+        self.powered_up = False
+        # controls cooldown length
+        self.powerup_cooldown = 1
+        self.powerup_timer = self.powerup_cooldown
 
     # allows us to access keyboard inputs
     def get_keys(self):
+        # creates a cooldown when we are powered up
+        if self.powered_up:
+            self.powerup_timer -= self.game.dt
+            if self.powerup_timer <= 0:
+                self.powerup_timer = self.powerup_cooldown
+                self.powered_up = False
+            # not powered up after 1 second
         # sets the velocity for the x and y direction to 0
         self.vx, self.vy = 0, 0
         # makes our character move when a key is pressed
@@ -116,6 +130,16 @@ class Player(pg.sprite.Sprite):
             # makes it slower to travel along the hypotanuse
             self.vx *= 0.7071
             self.vy *= 0.7071
+        if keys[pg.K_e] and self.speed_powerups >= 1 and self.powered_up == False:
+            # increases speed if we have one or more speed powerups and we press the e key
+            self.powered_up = True
+            self.speed += 300
+            self.speed_powerups -= 1
+        if keys[pg.K_q] and self.shield_powerups >= 1 and self.powered_up == False:
+            # increases health if we have one or more shield powerups and we press the q key
+            self.powered_up = True
+            self.hitpoints += 10
+            self.shield_powerups -= 1
 
 
     # This tells it how far to move from itself so it should move then stop
@@ -181,7 +205,7 @@ class Player(pg.sprite.Sprite):
                 # allows us to do things based on when we collide with a powerup
             if str(hits[0].__class__.__name__) == "PowerUp":
                 # makes us faster when we hit a powerup
-                self.speed += 150
+                self.speed_powerups += 1
             if str(hits[0].__class__.__name__) == "SpeedDown":
                 # makes us slower when we hit a speed down powerup
                 self.speed -= 150
@@ -195,7 +219,7 @@ class Player(pg.sprite.Sprite):
                 self.hitpoints -= 1
             if str(hits[0].__class__.__name__) == "Shield":
                 # adds hitpoints when we hit a shield powerup
-                self.hitpoints += 10
+                self.shield_powerups += 1
             if str(hits[0].__class__.__name__) == "BossMob":
                 # adds hitpoints when we hit a shield powerup
                 self.hitpoints -= 10

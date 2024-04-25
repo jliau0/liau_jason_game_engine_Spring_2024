@@ -15,6 +15,7 @@ from os import path
 
 '''
 Release version:
+Storable powerups + Inventory
 
 Release version feature brainstorm:
 Additional player as mob
@@ -390,7 +391,7 @@ class Game:
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, "Press a Key to Begin. Collect the coins without touching the enemies.", 24, WHITE, WIDTH/4 - 32, 2)
+        self.draw_text(self.screen, "Press a Key to Begin. Collect the coins without touching the enemies.", 24, WHITE, WIDTH/4 - 32, HEIGHT/2 - 24)
         # waits for a keyboard input to start the game
         pg.display.flip()
         self.wait_for_key()
