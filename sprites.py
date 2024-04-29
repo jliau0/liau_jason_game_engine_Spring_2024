@@ -82,7 +82,7 @@ class Player(pg.sprite.Sprite):
         self.y = y * TILESIZE
         self.moneybag = 0
         # allows us to access speed conveniently
-        self.speed = 50
+        self.speed = 300
         self.moneybag = 0
         self.hitpoints = 1
         self.current_frame = 0
