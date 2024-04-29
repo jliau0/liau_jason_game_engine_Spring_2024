@@ -83,6 +83,7 @@ class Player(pg.sprite.Sprite):
         self.moneybag = 0
         # allows us to access speed conveniently
         self.speed = 300
+        # sets our base player stats
         self.moneybag = 0
         self.hitpoints = 1
         self.current_frame = 0
@@ -104,9 +105,9 @@ class Player(pg.sprite.Sprite):
         if self.powered_up:
             self.powerup_timer -= self.game.dt
             if self.powerup_timer <= 0:
+        # not powered up after 1 second
                 self.powerup_timer = self.powerup_cooldown
                 self.powered_up = False
-            # not powered up after 1 second
         # sets the velocity for the x and y direction to 0
         self.vx, self.vy = 0, 0
         # makes our character move when a key is pressed
