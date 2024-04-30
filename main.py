@@ -18,12 +18,13 @@ Release version:
 Storable powerups + Inventory
 
 Release version feature brainstorm:
+(Brainstormed with help from ChatGPT)
 Additional player as mob
 Different endings based on in-game choices/gameplay
 Storing powerups
 Helpful NPCs
 
-Beta:
+Beta Feature:
 Add boss fight/Boss level
 
 I chose to ask my father about five fun aspects of my game. These are the five aspects he chose.
