@@ -136,7 +136,7 @@ class Player(pg.sprite.Sprite):
         if keys[pg.K_e] and self.speed_powerups >= 1 and self.powered_up == False:
             # increases speed if we have one or more speed powerups and we press the e key
             self.powered_up = True
-            self.speed += 300
+            self.speed += 150
             self.speed_powerups -= 1
             # makes it so that this happens when we press e, have one or more speed powerups, and are not powered up
         if keys[pg.K_q] and self.shield_powerups >= 1 and self.powered_up == False:
@@ -144,6 +144,8 @@ class Player(pg.sprite.Sprite):
             self.powered_up = True
             self.hitpoints += 10
             self.shield_powerups -= 1
+        if keys[pg.K_r]:
+            self.game.show_inventory_screen()
 
 
     # This tells it how far to move from itself so it should move then stop

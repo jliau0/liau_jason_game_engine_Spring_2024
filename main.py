@@ -397,6 +397,16 @@ class Game:
         pg.display.flip()
         self.wait_for_key()
 
+    # creates menu screen
+    def show_inventory_screen(self):
+        # fills the background color
+        self.screen.fill(BGCOLOR)
+        # draws text on the background
+        self.draw_text(self.screen, "Inventory Screen", 24, WHITE, WIDTH/4 - 32, HEIGHT/2 - 24)
+        # waits for a keyboard input to start the game
+        pg.display.flip()
+        self.wait_for_key()
+
     # # creates boss level prepare screen
     # def show_prepare_screen(self):
     #     # fills the background color
