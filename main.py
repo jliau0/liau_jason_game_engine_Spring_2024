@@ -318,20 +318,20 @@ class Game:
         # This runs everything update (enemies march, powerups bob up and down)
         self.all_sprites.update()
 
-        # changes the level if we have 11 coins on level 1
-        if self.player1.moneybag == 11 and self.current_level == 'LEVEL1':
+        # changes the level if we have 10 coins on level 1
+        if self.player1.moneybag == 10 and self.current_level == 'LEVEL1':
             self.change_level("LEVEL2.txt")
 
-        # Changes level to level 3 if we have 11 coins on level 2
-        if self.player1.moneybag == 11 and self.current_level == 'LEVEL2':
+        # Changes level to level 3 if we have 10 coins on level 2
+        if self.player1.moneybag == 10 and self.current_level == 'LEVEL2':
             self.change_level("LEVEL3.txt")
 
-        # Changes level to level 4 if we have 11 coins on level 3
-        if self.player1.moneybag == 11 and self.current_level == 'LEVEL3':
+        # Changes level to level 4 if we have 10 coins on level 3
+        if self.player1.moneybag == 10 and self.current_level == 'LEVEL3':
             self.change_level("LEVEL4.txt")
 
-        # Changes level to level 5 if we have 11 coins on level 4
-        if self.player1.moneybag == 11 and self.current_level == 'LEVEL4':
+        # Changes level to level 5 if we have 10 coins on level 4
+        if self.player1.moneybag == 10 and self.current_level == 'LEVEL4':
             self.change_level("LEVEL5.txt")
 
     def draw_grid(self):
@@ -402,7 +402,17 @@ class Game:
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, "Inventory Screen", 24, WHITE, WIDTH/4 - 32, HEIGHT/2 - 24)
+        self.draw_text(self.screen, f"Speed powerups: {self.player1.speed_powerups}         Shield powerups: {self.player1.shield_powerups}         Money: {self.player1.moneybag}/10", 24, WHITE, WIDTH/4 - 16, HEIGHT/2 - 24)
+        # waits for a keyboard input to start the game
+        pg.display.flip()
+        self.wait_for_key()
+
+    # creates congratulations screen
+    def show_congratulation_screen(self):
+        # fills the background color
+        self.screen.fill(BGCOLOR)
+        # draws congratulations on the background
+        self.draw_text(self.screen, "CONGRATULATIONS!", 24, WHITE, WIDTH/2 - 80, HEIGHT/2 - 24)
         # waits for a keyboard input to start the game
         pg.display.flip()
         self.wait_for_key()

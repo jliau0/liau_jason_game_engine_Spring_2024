@@ -144,8 +144,13 @@ class Player(pg.sprite.Sprite):
             self.powered_up = True
             self.hitpoints += 10
             self.shield_powerups -= 1
-        if keys[pg.K_r]:
+        # opens inventory if we press r on a level other than level 5
+        if keys[pg.K_r] and self.game.current_level != 'LEVEL5':
             self.game.show_inventory_screen()
+        # opens congratulations screen if we press r on level 5
+        if keys[pg.K_r] and self.game.current_level == 'LEVEL5':
+            self.game.show_congratulation_screen()
+
 
 
     # This tells it how far to move from itself so it should move then stop
@@ -275,7 +280,7 @@ class Player(pg.sprite.Sprite):
 
         ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
         if self.moneybag == 100 and self.game.current_level == 'LEVEL5':
-            # prints you win and shows victory screen when we collect 11 coins on the final level
+            # prints you win and shows victory screen when we collect 100 coins on the final level
             print("You win!")
             self.game.show_victory_screen()
         if self.hitpoints <= 0:
@@ -573,13 +578,13 @@ class BossMob(pg.sprite.Sprite):
 
         # makes our velocity depend on the player's velocity and position so that we follow it
         if self.rect.x < self.game.player1.rect.x:
-            self.vx = 200
+            self.vx = 180
         if self.rect.x > self.game.player1.rect.x:
-            self.vx = -200    
+            self.vx = -180    
         if self.rect.y < self.game.player1.rect.y:
-            self.vy = 200
+            self.vy = 180
         if self.rect.y > self.game.player1.rect.y:
-            self.vy = -200
+            self.vy = -180
         # codes collision with walls
         # disables collision with walls
         self.rect.x = self.x
