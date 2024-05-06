@@ -90,6 +90,7 @@ class Player(pg.sprite.Sprite):
         self.last_update = 0
         self.speed_powerups = 0
         self.shield_powerups = 0
+        self.ultimate_powerups = 0
         self.jumping = False
         self.walking = False
         # sets up a cooldown for our powerups
@@ -144,12 +145,21 @@ class Player(pg.sprite.Sprite):
             self.powered_up = True
             self.hitpoints += 10
             self.shield_powerups -= 1
+        if keys[pg.K_z] and self.ultimate_powerups >= 1 and self.powered_up == False:
+            # increases health and speed if we press x white not powered up
+            self.powered_up = True
+            self.hitpoints += 11
+            self.speed += 300
+            self.ultimate_powerups -= 1
         # opens inventory if we press r on a level other than level 5
         if keys[pg.K_r] and self.game.current_level != 'LEVEL5':
             self.game.show_inventory_screen()
         # opens congratulations screen if we press r on level 5
         if keys[pg.K_r] and self.game.current_level == 'LEVEL5':
             self.game.show_congratulation_screen()
+        # opens help screen if we press k
+        if keys[pg.K_x]:
+            self.game.show_help_screen()
 
 
 
@@ -234,6 +244,9 @@ class Player(pg.sprite.Sprite):
             if str(hits[0].__class__.__name__) == "BossMob":
                 # adds hitpoints when we hit a shield powerup
                 self.hitpoints -= 10
+            if str(hits[0].__class__.__name__) == "Ultimate":
+                # adds ultimate powerup when we hit an ultimate powerup
+                self.ultimate_powerups += 1
 
     # Animates our sprite based on the time
     def animate(self):
@@ -277,6 +290,8 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.shield, True)
         # adds collision for boss mob
         self.collide_with_group(self.game.boss_mobs, False)
+        # adds collision for ultimate powerups
+        self.collide_with_group(self.game.ultimate_powerups, True)
 
         ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
         if self.moneybag == 100 and self.game.current_level == 'LEVEL5':
@@ -591,6 +606,27 @@ class BossMob(pg.sprite.Sprite):
         # self.collide_with_walls('x')
         self.rect.y = self.y
         # self.collide_with_walls('y')
+
+# creates new powerup class
+class Ultimate(pg.sprite.Sprite):
+    # initializes the class
+    def __init__(self, game, x, y):
+        # adds the sprite to the all sprites group and to the power up group
+        self.groups = game.all_sprites, game.ultimate_powerups
+        # initializes the class
+        pg.sprite.Sprite.__init__(self, self.groups)
+        # sets the shield class game equal to the game
+        self.game = game
+        # sets the ultimate powerup image
+        self.image = game.ultimate_img
+        # allows us to get the rectangle
+        self.rect = self.image.get_rect()
+        # sets the x and y coordinates of the shield power up
+        self.x = x
+        self.y = y
+        # sets the position and size of the shield power up
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
 
 
 

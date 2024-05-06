@@ -15,7 +15,7 @@ from os import path
 
 '''
 Release version:
-Storable powerups + Inventory
+Storable powerups + Inventory + New powerup type + Help screen
 
 Release version feature brainstorm:
 (Brainstormed with help from ChatGPT)
@@ -96,6 +96,8 @@ class Game:
         self.slowDown_img = pg.image.load(path.join(self.img_folder, 'slowDown.png')).convert_alpha()
         # allow us to use an image for the boss mob image
         self.bossmob_img = pg.image.load(path.join(self.img_folder, 'boss.png')).convert_alpha()
+        # allow us to use an image for the ultimate powerup image
+        self.ultimate_img = pg.image.load(path.join(self.img_folder, 'ultimate.png')).convert_alpha()
 
         # empty list for map data
         self.map_data = []
@@ -175,6 +177,9 @@ class Game:
                 # places a boss mob where we place "b" on the map
                 if tile == "b":
                     BossMob(self, col, row)
+                # places an ultimate powerup where we place "U" on the map
+                if tile == "U":
+                    Ultimate(self, col, row)
 
     def restart_game(self, lvl):
         # sets current level as level 1 (Help by Aayush)
@@ -229,6 +234,9 @@ class Game:
                 # places a boss mob where we place "b" on the map
                 if tile == "b":
                     BossMob(self, col, row)
+                 # places an ultimate powerup where we place "U" on the map
+                if tile == "U":
+                    Ultimate(self, col, row)
 
                     
     # Creates a method that runs the game
@@ -245,6 +253,7 @@ class Game:
         self.super_mobs = pg.sprite.Group()
         self.shield = pg.sprite.Group()
         self.boss_mobs = pg.sprite.Group()
+        self.ultimate_powerups = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -289,6 +298,9 @@ class Game:
                 # places a boss mob where we place "b" on the map
                 if tile == "b":
                     BossMob(self, col, row)
+                 # places an ultimate powerup where we place "U" on the map
+                if tile == "U":
+                    Ultimate(self, col, row)
 
 
     # Runs our game - Starts game
@@ -392,7 +404,7 @@ class Game:
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, "Press a Key to Begin. Collect the coins without touching the enemies.", 24, WHITE, WIDTH/4 - 32, HEIGHT/2 - 24)
+        self.draw_text(self.screen, "Press a Key to Begin. Collect the coins without touching the enemies. Press X to open help screen.", 24, WHITE, WIDTH/4 - 170, HEIGHT/2 - 24)
         # waits for a keyboard input to start the game
         pg.display.flip()
         self.wait_for_key()
@@ -402,7 +414,18 @@ class Game:
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, f"Speed powerups: {self.player1.speed_powerups}         Shield powerups: {self.player1.shield_powerups}         Coins: {self.player1.moneybag}/10", 24, WHITE, WIDTH/4 - 16, HEIGHT/2 - 24)
+        self.draw_text(self.screen, f"Speed powerups: {self.player1.speed_powerups}         Shield powerups: {self.player1.shield_powerups}         Ultimate Powerups: {self.player1.ultimate_powerups}         Coins: {self.player1.moneybag}/10", 24, WHITE, WIDTH/4 - 125, HEIGHT/2 - 24)
+        # waits for a keyboard input to start the game
+        pg.display.flip()
+        self.wait_for_key()
+
+    # creates menu screen
+    def show_help_screen(self):
+        # fills the background color
+        self.screen.fill(BGCOLOR)
+        # draws text on the background
+        self.draw_text(self.screen, "WASD movement       Press E to use speed powerup.       Press Q to use shield powerup.", 24, WHITE, WIDTH/4 - 112, HEIGHT/2 - 24)
+        self.draw_text(self.screen, "Press Z to use ultimate powerup (Super speed and shield powerup)       Press R to open inventory.", 24, WHITE, WIDTH/4 - 159, HEIGHT/2 + 48)
         # waits for a keyboard input to start the game
         pg.display.flip()
         self.wait_for_key()
