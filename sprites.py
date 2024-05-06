@@ -95,7 +95,7 @@ class Player(pg.sprite.Sprite):
         # sets up a cooldown for our powerups
         self.powered_up = False
         # controls cooldown length for powerups
-        self.powerup_cooldown = 1
+        self.powerup_cooldown = 0.5
         self.powerup_timer = self.powerup_cooldown
 
     # allows us to access keyboard inputs

@@ -402,7 +402,7 @@ class Game:
         # fills the background color
         self.screen.fill(BGCOLOR)
         # draws text on the background
-        self.draw_text(self.screen, f"Speed powerups: {self.player1.speed_powerups}         Shield powerups: {self.player1.shield_powerups}         Money: {self.player1.moneybag}/10", 24, WHITE, WIDTH/4 - 16, HEIGHT/2 - 24)
+        self.draw_text(self.screen, f"Speed powerups: {self.player1.speed_powerups}         Shield powerups: {self.player1.shield_powerups}         Coins: {self.player1.moneybag}/10", 24, WHITE, WIDTH/4 - 16, HEIGHT/2 - 24)
         # waits for a keyboard input to start the game
         pg.display.flip()
         self.wait_for_key()
