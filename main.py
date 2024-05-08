@@ -69,6 +69,8 @@ class Game:
         pg.display.set_caption(TITLE)
         # allows us to access information from the player class
         self.player = Player
+        # allows us to tell whether or not the player is waiting within the game
+        self.waiting = 0
         # setting game clock
         self.clock = pg.time.Clock()
         # Allows us to store information and set highscores
@@ -98,6 +100,8 @@ class Game:
         self.bossmob_img = pg.image.load(path.join(self.img_folder, 'boss.png')).convert_alpha()
         # allow us to use an image for the ultimate powerup image
         self.ultimate_img = pg.image.load(path.join(self.img_folder, 'ultimate.png')).convert_alpha()
+        # allow us to use an image for the goalie mob powerup image
+        self.goalie_img = pg.image.load(path.join(self.img_folder, 'goalie.png')).convert_alpha()
 
         # empty list for map data
         self.map_data = []
@@ -180,8 +184,11 @@ class Game:
                 # places an ultimate powerup where we place "U" on the map
                 if tile == "U":
                     Ultimate(self, col, row)
+                # places a goalie mob where we place "G" on the map
+                if tile == "G":
+                    Goalie(self, col, row)
 
-    def restart_game(self, lvl):
+    def restart_game(self):
         # sets current level as level 1 (Help by Aayush)
         self.current_level = 'LEVEL1.txt'
         # kills the sprites that are already on the screen
@@ -192,7 +199,7 @@ class Game:
         # resets the map
         self.map_data = []
         # opens the new level
-        with open(path.join(self.game_folder, lvl), 'rt') as f:
+        with open(path.join(self.game_folder), 'rt') as f:
             # prints the map data
             for line in f:
                 print(line)
@@ -237,6 +244,9 @@ class Game:
                  # places an ultimate powerup where we place "U" on the map
                 if tile == "U":
                     Ultimate(self, col, row)
+                # places a goalie mob where we place "G" on the map
+                if tile == "G":
+                    Goalie(self, col, row)
 
                     
     # Creates a method that runs the game
@@ -254,6 +264,7 @@ class Game:
         self.shield = pg.sprite.Group()
         self.boss_mobs = pg.sprite.Group()
         self.ultimate_powerups = pg.sprite.Group()
+        self.goalies = pg.sprite.Group()
         # This puts the player in the middle of the screen and allows it to have access to the rest of the game (such as walls)
         # # this is a class because it has a capital G
         # # Adds player1 to the class
@@ -301,6 +312,10 @@ class Game:
                  # places an ultimate powerup where we place "U" on the map
                 if tile == "U":
                     Ultimate(self, col, row)
+                # places a goalie mob where we place "G" on the map
+                if tile == "G":
+                    Goalie(self, col, row)
+
 
 
     # Runs our game - Starts game
