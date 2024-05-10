@@ -84,8 +84,6 @@ class Player(pg.sprite.Sprite):
         # allows us to access speed conveniently
         self.speed = 300
         # sets our base player stats
-        # allows us to tell whether or not the player is waiting within the game
-        self.waiting = 0
         self.moneybag = 0
         self.hitpoints = 1
         self.current_frame = 0
@@ -153,7 +151,7 @@ class Player(pg.sprite.Sprite):
             self.hitpoints += 11
             self.speed += 300
             self.ultimate_powerups -= 1
-        # opens inventory if we press r on a level other than level 5 and we are not waiting
+        # opens inventory if we press r on a level other than level 5
         if keys[pg.K_r] and self.game.current_level != 'LEVEL5':
             self.game.show_inventory_screen()
         # opens congratulations screen if we press r on level 5
@@ -162,9 +160,6 @@ class Player(pg.sprite.Sprite):
         # opens help screen if we press k
         if keys[pg.K_x]:
             self.game.show_help_screen()
-        # restarts game if we press r while waiting
-        if self.waiting >= 1:
-            print("Finally working")
 
 
 

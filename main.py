@@ -134,8 +134,6 @@ class Game:
             s.kill()
         # resets the moneybag
         self.player.moneybag = 0
-        # resets the waiting value
-        self.player.waiting = 0
         # resets the map
         self.map_data = []
         # opens the new level
@@ -196,12 +194,12 @@ class Game:
             s.kill()
         # resets the moneybag
         self.player.moneybag = 0
-        # resets the waiting value
-        self.player.waiting = 0
         # resets the map
         self.map_data = []
+        # copied from ChatGPT for the next two lines (fixing the format so that we can open Level 1)
+        level_path = path.join(self.game_folder, self.current_level)
         # opens the new level
-        with open(path.join(self.game_folder), 'rt') as f:
+        with open(level_path, 'rt') as f:
             # prints the map data
             for line in f:
                 print(line)
@@ -476,6 +474,8 @@ class Game:
         # draws text on the background
         # Adds random insult when you die - center centers the text in the space of 200 characters
         self.draw_text(self.screen, random.choice(myinsults).center(200), 24, WHITE, 0, HEIGHT/2 - 24)
+        # draws instructions
+        self.draw_text(self.screen, "Press R to restart game.     Press space to quit.", 24, WHITE, WIDTH/2 - 190, HEIGHT/2 + 25)
         # runs the game over method and opens the menu without closing it
         pg.display.flip()
         self.game_over()
@@ -489,6 +489,8 @@ class Game:
         # draws text on the background
         # adds random compliment when you win - center centers the text in the space of 200 characters
         self.draw_text(self.screen, random.choice(mycompliments).center(200), 24, WHITE, 0, HEIGHT/2 - 24)
+        # draws instructions
+        self.draw_text(self.screen, "Press R to restart game.     Press space to quit.", 24, WHITE, WIDTH/2 - 190, HEIGHT/2 + 25)
         # runs the game over method and opens the menu without closing it
         pg.display.flip()
         self.game_over()
@@ -511,7 +513,6 @@ class Game:
 
     # creates a new method that does not remove the menu when we release a key
     def game_over(self):
-        self.player1.waiting += 1
         # when we are waiting, the clock ticks
         waiting = True
         while waiting:
@@ -521,6 +522,19 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     waiting = False
+                    self.quit()
+                keys = pg.key.get_pressed()
+                if keys[pg.K_r]:
+                    # Create a new game if we press r while the game is over
+                    g = Game()
+                    # create new game
+                    g.new()
+                    # run the game
+                    g.run()
+                    # g.show_go_screen()
+                # quits pygame and our game if we press space after the game is over
+                if keys[pg.K_SPACE]:
+                    pg.QUIT
                     self.quit()
 
 # Create a new game
