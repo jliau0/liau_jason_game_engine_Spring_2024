@@ -69,8 +69,6 @@ class Game:
         pg.display.set_caption(TITLE)
         # allows us to access information from the player class
         self.player = Player
-        # allows us to tell whether or not the player is waiting within the game
-        self.waiting = 0
         # setting game clock
         self.clock = pg.time.Clock()
         # Allows us to store information and set highscores
@@ -136,6 +134,8 @@ class Game:
             s.kill()
         # resets the moneybag
         self.player.moneybag = 0
+        # resets the waiting value
+        self.player.waiting = 0
         # resets the map
         self.map_data = []
         # opens the new level
@@ -153,7 +153,7 @@ class Game:
                 print(col)
                 # places a wall where we mark 1 in level2.txt
                 if tile == '1':
-                    print("a wall at", row, col)
+                    # print("a wall at", row, col)
                     Wall(self, col, row)
                     # places the player where we mark P in level2.txt
                 if tile == "P":
@@ -196,6 +196,8 @@ class Game:
             s.kill()
         # resets the moneybag
         self.player.moneybag = 0
+        # resets the waiting value
+        self.player.waiting = 0
         # resets the map
         self.map_data = []
         # opens the new level
@@ -213,7 +215,7 @@ class Game:
                 print(col)
                 # places a wall where we mark 1 in level2.txt
                 if tile == '1':
-                    print("a wall at", row, col)
+                    # print("a wall at", row, col)
                     Wall(self, col, row)
                     # places the player where we mark P in level2.txt
                 if tile == "P":
@@ -281,7 +283,7 @@ class Game:
                 print(col)
                 # places a wall where we mark 1 in map.txt
                 if tile == '1':
-                    print("a wall at", row, col)
+                    # print("a wall at", row, col)
                     Wall(self, col, row)
                     # places the player where we mark P in map.txt
                 if tile == "P":
@@ -509,6 +511,7 @@ class Game:
 
     # creates a new method that does not remove the menu when we release a key
     def game_over(self):
+        self.player1.waiting += 1
         # when we are waiting, the clock ticks
         waiting = True
         while waiting:

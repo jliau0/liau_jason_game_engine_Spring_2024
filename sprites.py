@@ -84,6 +84,8 @@ class Player(pg.sprite.Sprite):
         # allows us to access speed conveniently
         self.speed = 300
         # sets our base player stats
+        # allows us to tell whether or not the player is waiting within the game
+        self.waiting = 0
         self.moneybag = 0
         self.hitpoints = 1
         self.current_frame = 0
@@ -152,17 +154,17 @@ class Player(pg.sprite.Sprite):
             self.speed += 300
             self.ultimate_powerups -= 1
         # opens inventory if we press r on a level other than level 5 and we are not waiting
-        if keys[pg.K_r] and self.game.current_level != 'LEVEL5' and self.game.waiting == False:
+        if keys[pg.K_r] and self.game.current_level != 'LEVEL5':
             self.game.show_inventory_screen()
         # opens congratulations screen if we press r on level 5
-        if keys[pg.K_r] and self.game.current_level == 'LEVEL5' and self.game.waiting == False:
+        if keys[pg.K_r] and self.game.current_level == 'LEVEL5':
             self.game.show_congratulation_screen()
         # opens help screen if we press k
         if keys[pg.K_x]:
             self.game.show_help_screen()
         # restarts game if we press r while waiting
-        if keys[pg.K_f] and self.game.waiting == True:
-            self.game.restart_game()
+        if self.waiting >= 1:
+            print("Finally working")
 
 
 
@@ -235,15 +237,15 @@ class Player(pg.sprite.Sprite):
                 self.speed -= 150
             if str(hits[0].__class__.__name__) == "Mob":
                 # reduces our hitpoints when we contact a mob
-                print("Collided with mob")
+                # print("Collided with mob")
                 self.hitpoints -= 1
             if str(hits[0].__class__.__name__) == "Goalie":
                 # reduces our hitpoints when we contact a goalie mob
-                print("Collided with mob")
+                # print("Collided with mob")
                 self.hitpoints -= 1
             if str(hits[0].__class__.__name__) == "SuperMob":
                 # reduces our hitpoints when we contact a super mob
-                print("Collided with super mob")
+                # print("Collided with super mob")
                 self.hitpoints -= 1
             if str(hits[0].__class__.__name__) == "Shield":
                 # adds hitpoints when we hit a shield powerup
@@ -305,11 +307,11 @@ class Player(pg.sprite.Sprite):
         ## adds actions based on our moneybag count and hitpoint value and level (help from Aayush)
         if self.moneybag == 100 and self.game.current_level == 'LEVEL5':
             # prints you win and shows victory screen when we collect 100 coins on the final level
-            print("You win!")
+            # print("You win!")
             self.game.show_victory_screen()
         if self.hitpoints <= 0:
             # prints you suck and shows loss screen when our hitpoints is 0 or negative
-            print("You suck")
+            # print("You suck")
             self.game.show_loss_screen()
 
         # updates our animation
