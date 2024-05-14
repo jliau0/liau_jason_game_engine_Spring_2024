@@ -15,7 +15,7 @@ from os import path
 
 '''
 Release version:
-Storable powerups + Inventory + New powerup type + Help screen
+Storable powerups + Inventory + New powerup type + Help screen + New Mob type + Way to restart or quit game from menu
 
 Release version feature brainstorm:
 (Brainstormed with help from ChatGPT)
