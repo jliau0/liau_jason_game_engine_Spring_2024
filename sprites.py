@@ -257,7 +257,7 @@ class Player(pg.sprite.Sprite):
         now = pg.time.get_ticks()
         # sets the frames based on our state
         if not self.jumping and not self.walking:
-            if now - self.last_update > 500:
+            if now - self.last_update > 350:
                 self.last_update = now
                 # accesses the frame that we are on
                 self.current_frame = (self.current_frame + 1) % len(self.standing_frames)

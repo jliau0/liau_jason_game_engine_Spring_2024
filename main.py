@@ -185,70 +185,7 @@ class Game:
                 # places a goalie mob where we place "G" on the map
                 if tile == "G":
                     Goalie(self, col, row)
-
-    def restart_game(self):
-        # sets current level as level 1 (Help by Aayush)
-        self.current_level = 'LEVEL1.txt'
-        # kills the sprites that are already on the screen
-        for s in self.all_sprites:
-            s.kill()
-        # resets the moneybag
-        self.player.moneybag = 0
-        # resets the map
-        self.map_data = []
-        # copied from ChatGPT for the next two lines (fixing the format so that we can open Level 1)
-        level_path = path.join(self.game_folder, self.current_level)
-        # opens the new level
-        with open(level_path, 'rt') as f:
-            # prints the map data
-            for line in f:
-                print(line)
-                self.map_data.append(line)
-        # prints items on the map
-        for row, tiles in enumerate(self.map_data):
-            # prints the items on our new map
-            print(row)
-            # prints the columns in our new map
-            for col, tile in enumerate(tiles):
-                print(col)
-                # places a wall where we mark 1 in level2.txt
-                if tile == '1':
-                    # print("a wall at", row, col)
-                    Wall(self, col, row)
-                    # places the player where we mark P in level2.txt
-                if tile == "P":
-                    self.player1 = Player(self, row, col)
-                # if tile == "p":
-                #     self.player2 = Player(self, row, col)
-                # Places a coin if the title of the location on the map is "C"
-                if tile == "C":
-                    Coin(self, col, row)
-                # places a powerup where we place "P" on the map
-                if tile == "S":
-                    PowerUp(self, col, row)
-                # places a speed down powerup where we place "s" on the map
-                if tile == "s":
-                    SpeedDown(self, col, row)
-                # places a mob where we place "M" on the map
-                if tile == "M":
-                    Mob(self, col, row)
-                # places a super mob where we place "M" on the map
-                if tile == "m":
-                    SuperMob(self, col, row)
-                # places a shield powerup where we place "p" on the map
-                if tile == "p":
-                    Shield(self, col, row)
-                # places a boss mob where we place "b" on the map
-                if tile == "b":
-                    BossMob(self, col, row)
-                 # places an ultimate powerup where we place "U" on the map
-                if tile == "U":
-                    Ultimate(self, col, row)
-                # places a goalie mob where we place "G" on the map
-                if tile == "G":
-                    Goalie(self, col, row)
-
-                    
+    
     # Creates a method that runs the game
     def new(self):
         # prints "create new game..."
